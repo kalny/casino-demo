@@ -17,6 +17,7 @@ class PlayGameController extends Controller
         return new GameResultResource(
             $gameEngineService->play(
                 $id,
+                $request->user()->id,
                 $request->getDTO()
             )
         );

@@ -6,6 +6,7 @@ readonly class GameResultDTO
 {
     public function __construct(
         public int $gameId,
+        public int $userId,
         public int $amount
     ) {
     }

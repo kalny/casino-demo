@@ -1,5 +1,7 @@
 <?php
 
+use App\Exceptions\BusinessException;
+use App\Services\Auth\Exceptions\InvalidCredentialsException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,5 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (BusinessException $exception) {
+            if ($exception instanceof InvalidCredentialsException) {
+                abort(401, $exception->getUserMessage());
+            }
+        });
     })->create();

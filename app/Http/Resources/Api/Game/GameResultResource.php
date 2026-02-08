@@ -19,6 +19,7 @@ class GameResultResource extends JsonResource
 
         return [
             'game_id' => $this->gameId,
+            'user_id' => $this->userId,
             'amount' => $this->amount,
         ];
     }
