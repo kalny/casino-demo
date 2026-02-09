@@ -18,9 +18,10 @@ class GameResultResource extends JsonResource
         /** @var GameResultDTO $this */
 
         return [
-            'game_id' => $this->gameId,
-            'user_id' => $this->userId,
-            'amount' => $this->amount,
+            'result' => $this->result->value,
+            'payout' => $this->payout,
+            'balance' => $this->balance,
+            'play_result' => $this->playResult,
         ];
     }
 }

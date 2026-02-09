@@ -20,7 +20,9 @@ class PlayGameControllerTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        $this->user = User::factory()->create([
+            'balance' => 1000
+        ]);
     }
 
     public function testPlay(): void
@@ -30,7 +32,9 @@ class PlayGameControllerTest extends TestCase
         $game = Game::factory()->create([
             'name' => 'Test Game',
             'type' => GameType::Slot,
-            'config' => ['test' => true]
+            'config' => [
+                'symbols' => ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+            ]
         ]);
 
         $payload = [
@@ -43,11 +47,38 @@ class PlayGameControllerTest extends TestCase
         );
 
         $response->assertStatus(200);
-        $response->assertJsonPath('data', [
-            'game_id' => $game->id,
-            'user_id' => $this->user->id,
-            'amount' => 100
+        $response->assertJsonStructure([
+            'data' => [
+                'result',
+                'payout',
+                'balance',
+                'play_result' => [
+                    'win',
+                    'multiplier'
+                ]
+            ]
         ]);
+    }
+
+    public function testPlayWithInvalidConfig(): void
+    {
+        Sanctum::actingAs($this->user);
+
+        $game = Game::factory()->create([
+            'name' => 'Test Game',
+            'type' => GameType::Slot
+        ]);
+
+        $payload = [
+            'amount' => 100,
+        ];
+
+        $response = $this->postJson(
+            route('api.games.play', ['id' => $game->id]),
+            $payload
+        );
+
+        $response->assertStatus(500);
     }
 
     public function testPlayUnauthorized(): void
@@ -55,7 +86,9 @@ class PlayGameControllerTest extends TestCase
         $game = Game::factory()->create([
             'name' => 'Test Game',
             'type' => GameType::Slot,
-            'config' => ['test' => true]
+            'config' => [
+                'symbols' => ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+            ]
         ]);
 
         $payload = [
@@ -78,7 +111,9 @@ class PlayGameControllerTest extends TestCase
         $game = Game::factory()->create([
             'name' => 'Test Game',
             'type' => GameType::Slot,
-            'config' => ['test' => true]
+            'config' => [
+                'symbols' => ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+            ]
         ]);
 
         $response = $this->postJson(
