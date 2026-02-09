@@ -9,13 +9,14 @@ use App\Exceptions\NotFoundException;
 use App\Models\Bet;
 use App\Models\Game;
 use App\Models\User;
+use App\Services\Game\Contracts\GameFactory;
 use App\Services\Game\Exceptions\InsufficientFundsException;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-readonly class GameEngineService
+class GameEngineService
 {
-    public function __construct(private GameResolver $gameResolver)
+    public function __construct(private readonly GameFactory $gameResolver)
     {
     }
 

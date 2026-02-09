@@ -3,13 +3,13 @@
 namespace Tests\Feature\Services\Game;
 
 use App\Enums\GameType;
-use App\Services\Game\DiceGameService;
-use App\Services\Game\GameResolver;
-use App\Services\Game\GameService;
-use App\Services\Game\RNGService;
-use App\Services\Game\SlotGameService;
+use App\Services\Game\Dice\DiceGameService;
+use App\Services\Game\Contracts\GameFactory;
+use App\Services\Game\Contracts\GameService;
+use App\Services\Game\Contracts\RNGService;
+use App\Services\Game\Slot\SlotGameService;
 
-readonly class TestGameResolver implements GameResolver
+readonly class TestGameResolver implements GameFactory
 {
     public function __construct(private int $roll, private array $reels)
     {

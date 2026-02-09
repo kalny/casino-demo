@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Game;
+namespace App\Services\Game\Contracts;
 
 use App\Models\Game;
 

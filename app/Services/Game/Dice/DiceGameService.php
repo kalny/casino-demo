@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Services\Game;
+namespace App\Services\Game\Dice;
 
 use App\Models\Game;
+use App\Services\Game\Contracts\GameService;
+use App\Services\Game\Contracts\RNGService;
 
 class DiceGameService implements GameService
 {

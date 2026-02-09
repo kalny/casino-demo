@@ -19,7 +19,7 @@ class GameControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(15, 'data');
-        $response->assertJsonPath('total', 20);
+        $response->assertJsonPath('meta.total', 20);
     }
 
     public function testShow(): void

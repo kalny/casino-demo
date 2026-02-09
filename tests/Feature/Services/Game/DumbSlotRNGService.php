@@ -3,7 +3,7 @@
 namespace Tests\Feature\Services\Game;
 
 use App\Models\Game;
-use App\Services\Game\RNGService;
+use App\Services\Game\Contracts\RNGService;
 
 readonly class DumbSlotRNGService implements RNGService
 {

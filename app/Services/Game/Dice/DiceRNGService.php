@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services\Game;
+namespace App\Services\Game\Dice;
 
 use App\Models\Game;
+use App\Services\Game\Contracts\RNGService;
 use Throwable;
 
 class DiceRNGService implements RNGService

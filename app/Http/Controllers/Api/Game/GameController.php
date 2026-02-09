@@ -5,19 +5,17 @@ namespace App\Http\Controllers\Api\Game;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Game\GameResource;
 use App\Models\Game;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GameController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
-        return response()->json(Game::paginate());
+        return GameResource::collection(Game::paginate());
     }
 
     public function show(int $id): GameResource
     {
-        $game = Game::findOrFail($id);
-
-        return new GameResource($game);
+        return new GameResource(Game::findOrFail($id));
     }
 }

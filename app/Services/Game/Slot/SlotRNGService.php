@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services\Game;
+namespace App\Services\Game\Slot;
 
 use App\Models\Game;
+use App\Services\Game\Contracts\RNGService;
 use App\Services\Game\Exceptions\InvalidConfigException;
 
 class SlotRNGService implements RNGService

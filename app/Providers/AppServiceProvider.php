@@ -2,15 +2,15 @@
 
 namespace App\Providers;
 
-use App\Services\Game\CasinoGameResolver;
 use App\Services\Game\GameResolver;
+use App\Services\Game\Contracts\GameFactory;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
 
     public $bindings = [
-        GameResolver::class => CasinoGameResolver::class,
+        GameFactory::class => GameResolver::class,
     ];
 
     /**
