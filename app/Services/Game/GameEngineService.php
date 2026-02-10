@@ -16,8 +16,10 @@ use Throwable;
 
 class GameEngineService
 {
-    public function __construct(private readonly GameFactory $gameResolver)
-    {
+    public function __construct(
+        private readonly GameFactory $gameResolver,
+        private readonly PlayGameService $playGameService
+    ) {
     }
 
     /**
@@ -36,10 +38,7 @@ class GameEngineService
 
         $user->balance -= $playGameDTO->amount;
 
-        $rngService = $this->gameResolver->getRngService($game->type);
-        $gameService = $this->gameResolver->getGameService($game->type);
-
-        $playResult = $gameService->play($game, $rngService, $playGameDTO->params);
+        $playResult =$this->playGameService->play($this->gameResolver, $game, $playGameDTO);
 
         $payout = $playResult['win']
             ? $playGameDTO->amount * $playResult['multiplier']

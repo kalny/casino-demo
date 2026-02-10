@@ -9,6 +9,7 @@ use App\Models\Game;
 use App\Models\User;
 use App\Services\Game\Exceptions\InsufficientFundsException;
 use App\Services\Game\GameEngineService;
+use App\Services\Game\PlayGameService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
@@ -47,7 +48,10 @@ class GameEngineServiceTest extends TestCase
         );
 
         $testGameResolver = new TestGameResolver(3, []);
-        $service = new GameEngineService($testGameResolver);
+        $service = new GameEngineService(
+            $testGameResolver,
+            new PlayGameService()
+        );
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
@@ -85,7 +89,10 @@ class GameEngineServiceTest extends TestCase
         );
 
         $testGameResolver = new TestGameResolver(5, []);
-        $service = new GameEngineService($testGameResolver);
+        $service = new GameEngineService(
+            $testGameResolver,
+            new PlayGameService()
+        );
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
@@ -123,7 +130,10 @@ class GameEngineServiceTest extends TestCase
         );
 
         $testGameResolver = new TestGameResolver(6, []);
-        $service = new GameEngineService($testGameResolver);
+        $service = new GameEngineService(
+            $testGameResolver,
+            new PlayGameService()
+        );
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
@@ -161,7 +171,10 @@ class GameEngineServiceTest extends TestCase
         );
 
         $testGameResolver = new TestGameResolver(3, []);
-        $service = new GameEngineService($testGameResolver);
+        $service = new GameEngineService(
+            $testGameResolver,
+            new PlayGameService()
+        );
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
@@ -212,7 +225,10 @@ class GameEngineServiceTest extends TestCase
             ['A', 'C', 'A'],
             ['E', 'A', 'A'],
         ]);
-        $service = new GameEngineService($testGameResolver);
+        $service = new GameEngineService(
+            $testGameResolver,
+            new PlayGameService()
+        );
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
@@ -263,7 +279,10 @@ class GameEngineServiceTest extends TestCase
             ['C', 'A', 'E'],
             ['E', 'A', 'A'],
         ]);
-        $service = new GameEngineService($testGameResolver);
+        $service = new GameEngineService(
+            $testGameResolver,
+            new PlayGameService()
+        );
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
@@ -309,7 +328,10 @@ class GameEngineServiceTest extends TestCase
         );
 
         $testGameResolver = new TestGameResolver(1, $grid);
-        $service = new GameEngineService($testGameResolver);
+        $service = new GameEngineService(
+            $testGameResolver,
+            new PlayGameService()
+        );
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
@@ -339,7 +361,10 @@ class GameEngineServiceTest extends TestCase
         );
 
         $testGameResolver = new TestGameResolver(1, $grid);
-        $service = new GameEngineService($testGameResolver);
+        $service = new GameEngineService(
+            $testGameResolver,
+            new PlayGameService()
+        );
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
