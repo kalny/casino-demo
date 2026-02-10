@@ -189,7 +189,11 @@ class GameEngineServiceTest extends TestCase
         $game = Game::factory()->create([
             'type' =>GameType::Slot,
             'config' => [
-                'symbols' => ['A', 'B', 'C'],
+                'symbols' => [
+                    'A' => 5,
+                    'B' => 6,
+                    'C' => 7
+                ],
                 'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
                 'reels_number' => 3,
                 'symbols_number' => 3,
@@ -236,7 +240,11 @@ class GameEngineServiceTest extends TestCase
         $game = Game::factory()->create([
             'type' =>GameType::Slot,
             'config' => [
-                'symbols' => ['A', 'B', 'C'],
+                'symbols' => [
+                    'A' => 5,
+                    'B' => 6,
+                    'C' => 7
+                ],
                 'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
                 'reels_number' => 3,
                 'symbols_number' => 3,
@@ -284,7 +292,11 @@ class GameEngineServiceTest extends TestCase
         $game = Game::factory()->create([
             'type' =>GameType::Slot,
             'config' => [
-                'symbols' => ['A', 'B', 'C'],
+                'symbols' => [
+                    'A' => 5,
+                    'B' => 6,
+                    'C' => 7
+                ],
                 'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
                 'reels_number' => 3,
                 'symbols_number' => 3,
@@ -302,6 +314,36 @@ class GameEngineServiceTest extends TestCase
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
 
         $this->assertEquals($win, $gameResultDTO->playResult['win']);
+    }
+
+    #[dataProvider('multiplierDataProvider')]
+    public function testPlaySlotMultiplier(array $grid, array $paylines, int $multiplier): void
+    {
+        $game = Game::factory()->create([
+            'type' =>GameType::Slot,
+            'config' => [
+                'symbols' => [
+                    'A' => 5,
+                    'B' => 6,
+                    'C' => 7
+                ],
+                'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
+                'reels_number' => 3,
+                'symbols_number' => 3,
+                'paylines' => $paylines
+            ]
+        ]);
+
+        $playGameDTO = new PlayGameDTO(
+            amount: 100
+        );
+
+        $testGameResolver = new TestGameResolver(1, $grid);
+        $service = new GameEngineService($testGameResolver);
+
+        $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
+
+        $this->assertEquals($multiplier, $gameResultDTO->playResult['multiplier']);
     }
 
     public function testPlayGameNotFound(): void
@@ -446,6 +488,85 @@ class GameEngineServiceTest extends TestCase
                     [[0, 1], [1, 1], [2, 2]]  // win
                 ],
                 'win' => true
+            ],
+        ];
+    }
+
+    public static function multiplierDataProvider(): array
+    {
+        return [
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 1], [1, 1], [2, 1]]
+                ],
+                'multiplier' => 5
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 1], [1, 1], [2, 1]],
+                    [[0, 1], [1, 1], [2, 2]]
+                ],
+                'multiplier' => 10
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['A', 'C', 'A'],
+                    ['C', 'A', 'B'],
+                ],
+                'paylines' => [
+                    [[0, 0], [1, 0], [2, 1]],
+                    [[0, 2], [1, 1], [2, 0]]
+                ],
+                'multiplier' => 12
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['A', 'C', 'A'],
+                    ['C', 'A', 'B'],
+                ],
+                'paylines' => [
+                    [[0, 0], [1, 0], [2, 1]],
+                    [[0, 2], [1, 1], [2, 0]],
+                    [[0, 1], [1, 2]],
+                ],
+                'multiplier' => 17
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['A', 'C', 'A'],
+                    ['C', 'A', 'B'],
+                ],
+                'paylines' => [
+                    [[2, 2]],
+                ],
+                'multiplier' => 6
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['A', 'C', 'A'],
+                    ['C', 'A', 'B'],
+                ],
+                'paylines' => [
+                    [[0, 0], [1, 0], [2, 1]],
+                    [[0, 2], [1, 1], [2, 0]],
+                    [[0, 1], [1, 2]],
+                    [[2, 2]],
+                ],
+                'multiplier' => 23
             ],
         ];
     }

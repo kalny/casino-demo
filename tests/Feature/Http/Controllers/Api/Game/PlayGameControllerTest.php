@@ -33,7 +33,11 @@ class PlayGameControllerTest extends TestCase
             'name' => 'Test Game',
             'type' => GameType::Slot,
             'config' => [
-                'symbols' => ['A', 'B', 'C'],
+                'symbols' => [
+                    'A' => 5,
+                    'B' => 6,
+                    'C' => 7
+                ],
                 'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
                 'reels_number' => 3,
                 'symbols_number' => 3,
@@ -93,7 +97,11 @@ class PlayGameControllerTest extends TestCase
             'name' => 'Test Game',
             'type' => GameType::Slot,
             'config' => [
-                'symbols' => ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+                'symbols' => [
+                    'A' => 5,
+                    'B' => 6,
+                    'C' => 7
+                ],
             ]
         ]);
 
@@ -118,7 +126,11 @@ class PlayGameControllerTest extends TestCase
             'name' => 'Test Game',
             'type' => GameType::Slot,
             'config' => [
-                'symbols' => ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+                'symbols' => [
+                    'A' => 5,
+                    'B' => 6,
+                    'C' => 7
+                ],
             ]
         ]);
 

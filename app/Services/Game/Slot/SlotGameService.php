@@ -9,36 +9,45 @@ use App\Services\Game\Exceptions\InvalidConfigException;
 
 class SlotGameService implements GameService
 {
-    private const DEFAULT_MULTIPLIER = 5;
-
     /**
      * @throws InvalidConfigException
      */
     public function play(Game $game, RNGService $rng, ?array $params): array
     {
-        $random = $rng->generate($game);
-        $grid = $random['grid'];
-
         $paylines = $game->config['paylines'] ?? null;
-        if (!$paylines) {
+        $symbols = $game->config['symbols'] ?? null;
+
+        if (!$paylines || !$symbols) {
             throw new InvalidConfigException('Invalid game config');
         }
 
-        $win = $this->checkPaylines($grid, $paylines);
+        $random = $rng->generate($game);
+        $grid = $random['grid'];
+
+        $winningPaylines = $this->getWinningPaylines($grid, $paylines);
+        $win = !empty($winningPaylines['paylines']);
 
         return [
             'win' => $win,
             'multiplier' => $win
-                ? self::DEFAULT_MULTIPLIER
+                ? $this->getMultiplier(
+                    $symbols,
+                    $winningPaylines['symbols']
+                )
                 : 0,
-            'grid' => $grid
+            'grid' => $grid,
+            'winning_paylines' => $winningPaylines['paylines']
         ];
     }
 
-    private function checkPaylines(array $grid, array $paylines): bool
+    private function getWinningPaylines(array $grid, array $paylines): array
     {
-        foreach ($paylines as $payline) {
+        $winPaylines = [
+            'paylines' => [],
+            'symbols' => [],
+        ];
 
+        foreach ($paylines as $payline) {
             $paylineSymbols = [];
 
             foreach ($payline as $element) {
@@ -48,10 +57,28 @@ class SlotGameService implements GameService
 
             $win = count(array_unique($paylineSymbols)) === 1;
             if ($win) {
-                return true;
+                $winPaylines['paylines'][] = $payline;
+                $winPaylines['symbols'][] = $paylineSymbols[0];
             }
-
         }
-        return false;
+
+        return $winPaylines;
+    }
+
+    /**
+     * @throws InvalidConfigException
+     */
+    private function getMultiplier(array $symbols, array $winningSymbols): int
+    {
+        $multiplier = 0;
+
+        foreach ($winningSymbols as $winningSymbol) {
+            if (!isset($symbols[$winningSymbol])) {
+                throw new InvalidConfigException('Invalid symbol: ' . $winningSymbol);
+            }
+            $multiplier += $symbols[$winningSymbol];
+        }
+
+        return $multiplier;
     }
 }
