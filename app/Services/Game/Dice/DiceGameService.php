@@ -27,7 +27,8 @@ class DiceGameService implements GameService
             'win' => $win,
             'multiplier' => $win
                 ? self::DEFAULT_MULTIPLIER
-                : 0
+                : 0,
+            'roll' => $roll,
         ];
     }
 }

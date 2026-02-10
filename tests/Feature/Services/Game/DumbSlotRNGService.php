@@ -7,14 +7,14 @@ use App\Services\Game\Contracts\RNGService;
 
 readonly class DumbSlotRNGService implements RNGService
 {
-    public function __construct(private array $reels)
+    public function __construct(private array $grid)
     {
     }
 
     public function generate(Game $game): array
     {
         return [
-            'reels' => $this->reels,
+            'grid' => $this->grid,
         ];
     }
 }

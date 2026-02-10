@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Services\Game\Exceptions\InsufficientFundsException;
 use App\Services\Game\GameEngineService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class GameEngineServiceTest extends TestCase
@@ -188,7 +189,13 @@ class GameEngineServiceTest extends TestCase
         $game = Game::factory()->create([
             'type' =>GameType::Slot,
             'config' => [
-                'symbols' => ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+                'symbols' => ['A', 'B', 'C'],
+                'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
+                'reels_number' => 3,
+                'symbols_number' => 3,
+                'paylines' => [
+                    [[0, 1], [1, 1], [2, 1]] // middle line
+                ]
             ]
         ]);
 
@@ -196,7 +203,11 @@ class GameEngineServiceTest extends TestCase
             amount: 100
         );
 
-        $testGameResolver = new TestGameResolver(1, ['A', 'B', 'C']);
+        $testGameResolver = new TestGameResolver(1, [
+            ['A', 'A', 'C'],
+            ['A', 'C', 'A'],
+            ['E', 'A', 'A'],
+        ]);
         $service = new GameEngineService($testGameResolver);
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
@@ -225,7 +236,13 @@ class GameEngineServiceTest extends TestCase
         $game = Game::factory()->create([
             'type' =>GameType::Slot,
             'config' => [
-                'symbols' => ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+                'symbols' => ['A', 'B', 'C'],
+                'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
+                'reels_number' => 3,
+                'symbols_number' => 3,
+                'paylines' => [
+                    [[0, 1], [1, 1], [2, 1]] // middle line
+                ]
             ]
         ]);
 
@@ -233,7 +250,11 @@ class GameEngineServiceTest extends TestCase
             amount: 100
         );
 
-        $testGameResolver = new TestGameResolver(1, ['A', 'A', 'A']);
+        $testGameResolver = new TestGameResolver(1, [
+            ['A', 'A', 'C'],
+            ['C', 'A', 'E'],
+            ['E', 'A', 'A'],
+        ]);
         $service = new GameEngineService($testGameResolver);
 
         $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
@@ -255,6 +276,32 @@ class GameEngineServiceTest extends TestCase
             'result' => 'win',
             'payout' => 500,
         ]);
+    }
+
+    #[dataProvider('paylinesDataProvider')]
+    public function testPlaySlotPaylines(array $grid, array $paylines, bool $win): void
+    {
+        $game = Game::factory()->create([
+            'type' =>GameType::Slot,
+            'config' => [
+                'symbols' => ['A', 'B', 'C'],
+                'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
+                'reels_number' => 3,
+                'symbols_number' => 3,
+                'paylines' => $paylines
+            ]
+        ]);
+
+        $playGameDTO = new PlayGameDTO(
+            amount: 100
+        );
+
+        $testGameResolver = new TestGameResolver(1, $grid);
+        $service = new GameEngineService($testGameResolver);
+
+        $gameResultDTO = $service->play($game->id, $this->user->id, $playGameDTO);
+
+        $this->assertEquals($win, $gameResultDTO->playResult['win']);
     }
 
     public function testPlayGameNotFound(): void
@@ -293,5 +340,113 @@ class GameEngineServiceTest extends TestCase
         );
 
         $this->service->play($this->game->id, $userWithZeroBalance->id, $playGameDTO);
+    }
+
+    public static function paylinesDataProvider(): array
+    {
+        return [
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 0], [1, 0], [2, 0]]
+                ],
+                'win' => false
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 1], [1, 1], [2, 1]]
+                ],
+                'win' => true
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 0], [1, 1], [2, 2]]
+                ],
+                'win' => true
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 0], [1, 1], [2, 1]]
+                ],
+                'win' => true
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 0], [1, 1], [2, 0]]
+                ],
+                'win' => false
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 1], [1, 1], [2, 2]]
+                ],
+                'win' => true
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 0], [1, 0], [2, 0]], // loss
+                    [[0, 1], [1, 1], [2, 1]]  // win
+                ],
+                'win' => true
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 1], [1, 1], [2, 1]], // win
+                    [[0, 2], [1, 2], [2, 2]]  // loss
+                ],
+                'win' => true
+            ],
+            [
+                'grid' => [
+                    ['A', 'A', 'C'],
+                    ['C', 'A', 'E'],
+                    ['E', 'A', 'A'],
+                ],
+                'paylines' => [
+                    [[0, 1], [1, 1], [2, 1]], // win
+                    [[0, 1], [1, 1], [2, 2]]  // win
+                ],
+                'win' => true
+            ],
+        ];
     }
 }
