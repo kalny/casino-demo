@@ -8,6 +8,7 @@ use App\Services\Game\Exceptions\InvalidConfigException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,21 +21,17 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (BusinessException $exception) {
-            if ($exception instanceof InvalidCredentialsException) {
-                abort(401, $exception->getUserMessage());
-            }
+        $exceptions->renderable(function (BusinessException $exception, Request $request) {
+            if ($request->wantsJson() || $request->is('api/*')) {
+                $status = match(true) {
+                    $exception instanceof InvalidCredentialsException => 401,
+                    $exception instanceof InsufficientFundsException => 402,
+                    $exception instanceof NotFoundException => 404,
+                    $exception instanceof InvalidConfigException => 500,
+                    default => 400,
+                };
 
-            if ($exception instanceof NotFoundException) {
-                abort(404, $exception->getUserMessage());
-            }
-
-            if ($exception instanceof InsufficientFundsException) {
-                abort(402, $exception->getUserMessage());
-            }
-
-            if ($exception instanceof InvalidConfigException) {
-                abort(500, $exception->getUserMessage());
+                abort($status, $exception->getUserMessage());
             }
         });
     })->create();
