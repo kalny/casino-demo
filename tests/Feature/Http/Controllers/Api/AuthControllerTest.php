@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use App\Models\User;
+use App\Domain\Common\ValueObjects\Email;
+use App\Infrastructure\Persistence\Eloquent\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -23,7 +24,7 @@ class AuthControllerTest extends TestCase
 
         $this->user = User::factory()->create([
             'name' => 'Already Exists',
-            'email' => 'alreadyexisis@example.com'
+            'email' => new Email('alreadyexisis@example.com')
         ]);
     }
 
@@ -42,8 +43,6 @@ class AuthControllerTest extends TestCase
         $response = $this->postJson(route('api.auth.register'), $payload);
 
         $response->assertStatus(200);
-        $response->assertJsonPath('data.user.name', $userName);
-        $response->assertJsonPath('data.user.email', $userEmail);
 
         $user = User::query()
             ->where('email', $userEmail)
@@ -52,6 +51,7 @@ class AuthControllerTest extends TestCase
 
         $this->assertNotNull($user);
         $this->assertTrue(Hash::check($userPassword, $user->password));
+        $response->assertJsonPath('data.user.id', $user->id);
     }
 
     #[dataProvider('registerDataProvider')]
@@ -76,8 +76,6 @@ class AuthControllerTest extends TestCase
         $response = $this->postJson(route('api.auth.login'), $payload);
 
         $response->assertStatus(200);
-        $response->assertJsonPath('data.user.name', 'Already Exists');
-        $response->assertJsonPath('data.user.email', $userEmail);
 
         [$id, $plainToken] = explode('|', $response->json('data.token'));
         $model = PersonalAccessToken::find($id);

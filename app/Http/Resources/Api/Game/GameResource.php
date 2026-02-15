@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api\Game;
 
-use App\Models\Game;
+use App\Infrastructure\Persistence\Eloquent\Models\Game;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

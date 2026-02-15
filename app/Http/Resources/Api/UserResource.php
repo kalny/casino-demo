@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api;
 
-use App\Services\Auth\DTO\UserDTO;
+use App\Application\UseCase\UserResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,12 +15,11 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var UserDTO $this */
+        /** @var UserResponse $this */
         return [
             'token' => $this->token,
             'user' => [
-                'name' => $this->name,
-                'email' => $this->email,
+                'id' => $this->id
             ]
         ];
     }

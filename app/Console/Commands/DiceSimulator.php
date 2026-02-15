@@ -2,10 +2,14 @@
 
 namespace App\Console\Commands;
 
-use App\DTO\Api\Game\PlayGameDTO;
-use App\Models\Game;
-use App\Services\Game\GameResolver;
-use App\Services\Game\PlayGameService;
+use App\Domain\Common\ValueObjects\BetAmount;
+use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Games\Dice\ValueObjects\DiceNumber;
+use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
+use App\Domain\Games\Dice\ValueObjects\PlayDiceType;
+use App\Domain\Games\Repository\GameRepository;
+use App\Domain\Games\Services\RandomDiceNumberGenerator;
+use App\Domain\User\UserId;
 use Illuminate\Console\Command;
 
 class DiceSimulator extends Command
@@ -24,32 +28,35 @@ class DiceSimulator extends Command
      */
     protected $description = 'Simulate Dice RTP';
 
+    public function __construct(
+        private readonly GameRepository $gameRepository,
+        private readonly RandomDiceNumberGenerator $rng
+    ) {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
+     * @throws InvalidArgumentException
      */
-    public function handle()
+    public function handle(): void
     {
-        $gameId = $this->ask('Enter game ID');
-        $game = Game::findOrFail($gameId);
+        $gameId = $this->ask('Enter Dice Game ID');
+        $diceGame = $this->gameRepository->getDiceGameById($gameId);
 
         $betAmount = $this->ask('Enter bet amount');
-        $diceAmount = $this->ask('Enter dice amount');
-        $betType = $this->choice(
-            'What is your bet type?',
+        $diceNumber = $this->ask('Enter dice number');
+        $playDiceType = $this->choice(
+            'What is your bet type (over, under)?',
             ['over', 'under'],
             'over'
         );
 
-        $playGameService = app(PlayGameService::class);
-
-        $gameResolver = app(GameResolver::class);
-
-        $playGameDTO = new PlayGameDTO(
-            amount: $betAmount,
-            params: [
-                'number' => $diceAmount,
-                'bet_type' => $betType
-            ]
+        $playInput = new PlayDiceInput(
+            userId: new UserId(1), // fake
+            betAmount: new BetAmount($betAmount),
+            chosenNumber: new DiceNumber($diceNumber),
+            playDiceType: PlayDiceType::from($playDiceType)
         );
 
         $numberOfCycles = $this->ask('Enter number of simulation cycles');
@@ -60,8 +67,10 @@ class DiceSimulator extends Command
         for ($i = 0; $i < $numberOfCycles; $i++) {
             $totalBets += $betAmount;
 
-            $result = $playGameService->play($gameResolver, $game, $playGameDTO);
-            $winAmount = $betAmount * $result['multiplier'];
+            $gameOutcome = $diceGame->playDice($playInput, $this->rng);
+
+            $winAmount = $gameOutcome->winAmount->getValue();
+
             if ($winAmount > 0) {
                 $totalWins += $winAmount;
             }

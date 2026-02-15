@@ -1,10 +1,11 @@
 <?php
 
-use App\Exceptions\BusinessException;
-use App\Exceptions\NotFoundException;
-use App\Services\Auth\Exceptions\InvalidCredentialsException;
-use App\Services\Game\Exceptions\InsufficientFundsException;
-use App\Services\Game\Exceptions\InvalidConfigException;
+use App\Domain\Exceptions\DomainException;
+use App\Domain\Exceptions\InsufficientFundsException;
+use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Exceptions\InvalidCredentialsException;
+use App\Domain\Exceptions\InvalidGameTypeException;
+use App\Domain\Exceptions\UserAlreadyExistsException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -21,17 +22,18 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->renderable(function (BusinessException $exception, Request $request) {
+        $exceptions->renderable(function (DomainException $exception, Request $request) {
             if ($request->wantsJson() || $request->is('api/*')) {
                 $status = match(true) {
+                    $exception instanceof UserAlreadyExistsException,
+                        $exception instanceof InvalidArgumentException,
+                        $exception instanceof InsufficientFundsException,
+                        $exception instanceof InvalidGameTypeException => 422,
                     $exception instanceof InvalidCredentialsException => 401,
-                    $exception instanceof InsufficientFundsException => 402,
-                    $exception instanceof NotFoundException => 404,
-                    $exception instanceof InvalidConfigException => 500,
                     default => 400,
                 };
 
-                abort($status, $exception->getUserMessage());
+                abort($status, $exception->getMessage());
             }
         });
     })->create();

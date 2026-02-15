@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\DTO\Api\Game\PlayGameDTO;
-use App\Models\Game;
-use App\Services\Game\GameResolver;
-use App\Services\Game\PlayGameService;
+use App\Domain\Common\ValueObjects\BetAmount;
+use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Games\Repository\GameRepository;
+use App\Domain\Games\Services\RandomGridGenerator;
+use App\Domain\Games\Slot\ValueObjects\PlaySlotInput;
+use App\Domain\User\UserId;
 use Illuminate\Console\Command;
 
 class SlotSimulator extends Command
@@ -24,22 +26,27 @@ class SlotSimulator extends Command
      */
     protected $description = 'Simulate Slot RTP';
 
+    public function __construct(
+        private readonly GameRepository $gameRepository,
+        private readonly RandomGridGenerator $rgg
+    ) {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
+     * @throws InvalidArgumentException
      */
     public function handle(): void
     {
-        $gameId = $this->ask('Enter game ID');
-        $game = Game::findOrFail($gameId);
+        $gameId = $this->ask('Enter Slot Game ID');
+        $slotGame = $this->gameRepository->getSlotGameById($gameId);
 
         $betAmount = $this->ask('Enter bet amount');
 
-        $playGameService = app(PlayGameService::class);
-
-        $gameResolver = app(GameResolver::class);
-
-        $playGameDTO = new PlayGameDTO(
-            amount: $betAmount
+        $playInput = new PlaySlotInput(
+            userId: new UserId(1), // fake
+            betAmount: new BetAmount($betAmount)
         );
 
         $numberOfCycles = $this->ask('Enter number of simulation cycles');
@@ -50,8 +57,10 @@ class SlotSimulator extends Command
         for ($i = 0; $i < $numberOfCycles; $i++) {
             $totalBets += $betAmount;
 
-            $result = $playGameService->play($gameResolver, $game, $playGameDTO);
-            $winAmount = $betAmount * $result['multiplier'];
+            $gameOutcome = $slotGame->playSlot($playInput, $this->rgg);
+
+            $winAmount = $gameOutcome->winAmount->getValue();
+
             if ($winAmount > 0) {
                 $totalWins += $winAmount;
             }

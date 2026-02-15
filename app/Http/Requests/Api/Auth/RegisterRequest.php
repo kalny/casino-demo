@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api\Auth;
 
-use App\DTO\Api\Auth\RegisterDTO;
+use App\Application\UseCase\RegisterUser\RegisterUserCommand;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,9 +30,9 @@ class RegisterRequest extends FormRequest
         ];
     }
 
-    public function getDTO(): RegisterDTO
+    public function toCommand(): RegisterUserCommand
     {
-        return new RegisterDTO(
+        return new RegisterUserCommand(
             name: $this->validated('name'),
             email: $this->validated('email'),
             password: $this->validated('password')

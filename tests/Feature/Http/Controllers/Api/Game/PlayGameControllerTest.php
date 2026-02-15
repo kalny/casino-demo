@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Game;
 
-use App\Enums\GameType;
-use App\Models\Game;
-use App\Models\User;
+use App\Domain\Games\Common\GameType;
+use App\Infrastructure\Persistence\Eloquent\Models\Game;
+use App\Infrastructure\Persistence\Eloquent\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -25,7 +25,7 @@ class PlayGameControllerTest extends TestCase
         ]);
     }
 
-    public function testPlay(): void
+    public function testPlaySlot(): void
     {
         Sanctum::actingAs($this->user);
 
@@ -34,9 +34,9 @@ class PlayGameControllerTest extends TestCase
             'type' => GameType::Slot,
             'config' => [
                 'symbols' => [
-                    'A' => 5,
-                    'B' => 6,
-                    'C' => 7
+                    ['name' => 'A', 'multiplier' => 5],
+                    ['name' => 'B', 'multiplier' => 6],
+                    ['name' => 'C', 'multiplier' => 7],
                 ],
                 'reel_strip' => ['A', 'A', 'C', 'A', 'B', 'B'],
                 'reels_number' => 3,
@@ -61,16 +61,16 @@ class PlayGameControllerTest extends TestCase
             'data' => [
                 'result',
                 'payout',
-                'balance',
                 'play_result' => [
-                    'win',
-                    'multiplier'
+                    'multiplier',
+                    'grid',
+                    'winning_paylines'
                 ]
             ]
         ]);
     }
 
-    public function testPlayWithInvalidConfig(): void
+    public function testPlaySlotWithInvalidConfig(): void
     {
         Sanctum::actingAs($this->user);
 
@@ -88,7 +88,95 @@ class PlayGameControllerTest extends TestCase
             $payload
         );
 
-        $response->assertStatus(500);
+        $response->assertStatus(400);
+    }
+
+    public function testPlayDice(): void
+    {
+        Sanctum::actingAs($this->user);
+
+        $game = Game::factory()->create([
+            'name' => 'Test Game',
+            'type' => GameType::Dice,
+            'config' => [
+                'multiplier' => 2
+            ]
+        ]);
+
+        $payload = [
+            'amount' => 100,
+            'params' => [
+                'number' => 1,
+                'bet_type' => 'over',
+            ]
+        ];
+
+        $response = $this->postJson(
+            route('api.games.play', ['id' => $game->id]),
+            $payload
+        );
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'result',
+                'payout',
+                'play_result' => [
+                    'multiplier',
+                    'roll',
+                ]
+            ]
+        ]);
+    }
+
+    public function testPlayDiceInvalidParams(): void
+    {
+        Sanctum::actingAs($this->user);
+
+        $game = Game::factory()->create([
+            'name' => 'Test Game',
+            'type' => GameType::Dice,
+            'config' => [
+                'multiplier' => 2
+            ]
+        ]);
+
+        $payload = [
+            'amount' => 100,
+        ];
+
+        $response = $this->postJson(
+            route('api.games.play', ['id' => $game->id]),
+            $payload
+        );
+
+        $response->assertStatus(422);
+    }
+
+    public function testPlayDiceInvalidGameConfig(): void
+    {
+        Sanctum::actingAs($this->user);
+
+        $game = Game::factory()->create([
+            'name' => 'Test Game',
+            'type' => GameType::Dice,
+            'config' => []
+        ]);
+
+        $payload = [
+            'amount' => 100,
+            'params' => [
+                'number' => 1,
+                'bet_type' => 'over',
+            ]
+        ];
+
+        $response = $this->postJson(
+            route('api.games.play', ['id' => $game->id]),
+            $payload
+        );
+
+        $response->assertStatus(400);
     }
 
     public function testPlayUnauthorized(): void

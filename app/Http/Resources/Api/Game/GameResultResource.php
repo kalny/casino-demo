@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api\Game;
 
-use App\DTO\Api\Game\GameResultDTO;
+use App\Domain\Games\Common\GameOutcome;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,13 +15,12 @@ class GameResultResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var GameResultDTO $this */
+        /** @var GameOutcome $this */
 
         return [
-            'result' => $this->result->value,
-            'payout' => $this->payout,
-            'balance' => $this->balance,
-            'play_result' => $this->playResult,
+            'result' => $this->outcomeStatus->value,
+            'payout' => $this->winAmount->getValue(),
+            'play_result' => $this->gameSpecificOutcome->jsonSerialize(),
         ];
     }
 }

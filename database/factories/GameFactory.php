@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Enums\GameType;
-use App\Models\Game;
+use App\Domain\Games\Common\GameType;
+use App\Infrastructure\Persistence\Eloquent\Models\Game;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class GameFactory extends Factory
 {
+    protected $model = Game::class;
+
     /**
      * Define the model's default state.
      *

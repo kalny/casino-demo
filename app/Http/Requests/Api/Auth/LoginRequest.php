@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Api\Auth;
 
-use App\DTO\Api\Auth\LoginDTO;
+use App\Application\UseCase\LoginUser\LoginUserCommand;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,9 +29,9 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    public function getDTO(): LoginDTO
+    public function toCommand(): LoginUserCommand
     {
-        return new LoginDTO(
+        return new LoginUserCommand(
             email: $this->input('email'),
             password: $this->input('password')
         );

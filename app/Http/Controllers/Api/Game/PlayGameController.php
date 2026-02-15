@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers\Api\Game;
 
+use App\Application\GameResolver;
+use App\Domain\Exceptions\InsufficientFundsException;
+use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Exceptions\InvalidGameTypeException;
+use App\Domain\Games\Repository\GameRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Game\PlayGameRequest;
 use App\Http\Resources\Api\Game\GameResultResource;
-use App\Services\Game\GameEngineService;
 
 class PlayGameController extends Controller
 {
+    /**
+     * @throws InvalidArgumentException
+     * @throws InsufficientFundsException
+     * @throws InvalidGameTypeException
+     */
     public function play(
         int $id,
         PlayGameRequest $request,
-        GameEngineService $gameEngineService
+        GameResolver $gameResolver,
+        GameRepository $gameRepository,
     ): GameResultResource {
-        return new GameResultResource(
-            $gameEngineService->play(
-                $id,
-                $request->user()->id,
-                $request->getDTO()
-            )
-        );
+        $gameType = $gameRepository->getTypeById($id);
+        $gameOutcome = $gameResolver->resolveGame($gameType, $request->validated(), $id, $request->user()->id);
+
+        return new GameResultResource($gameOutcome);
     }
 }

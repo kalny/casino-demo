@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Bet;
+use App\Infrastructure\Persistence\Eloquent\Models\Bet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class BetFactory extends Factory
 {
+    protected $model = Bet::class;
+
     /**
      * Define the model's default state.
      *

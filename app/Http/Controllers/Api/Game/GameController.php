@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Game;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\Game\GameResource;
-use App\Models\Game;
+use App\Infrastructure\Persistence\Eloquent\Models\Game;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GameController extends Controller
