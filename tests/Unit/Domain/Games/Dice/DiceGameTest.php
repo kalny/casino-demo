@@ -6,11 +6,11 @@ use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\Common\ValueObjects\BetMultiplier;
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Games\Dice\DiceGame;
+use App\Domain\Games\Dice\RandomDiceNumberGenerator;
 use App\Domain\Games\Dice\ValueObjects\DiceNumber;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceType;
 use App\Domain\Games\GameId;
-use App\Domain\Games\Services\RandomDiceNumberGenerator;
 use App\Domain\User\UserId;
 use Tests\TestCase;
 

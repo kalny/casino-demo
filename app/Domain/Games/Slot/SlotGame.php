@@ -6,7 +6,6 @@ use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Games\Common\GameOutcome;
 use App\Domain\Games\Common\GameType;
 use App\Domain\Games\Common\OutcomeStatus;
-use App\Domain\Games\Services\RandomGridGenerator;
 use App\Domain\Games\Game;
 use App\Domain\Games\GameId;
 use App\Domain\Games\Slot\ValueObjects\GridInt;
@@ -31,9 +30,11 @@ final class SlotGame extends Game
     /**
      * @throws InvalidArgumentException
      */
-    public function playSlot(PlaySlotInput $playInput, RandomGridGenerator $rgg): GameOutcome
-    {
-        $grid = $rgg->nextGrid($this->reelsNumber, $this->symbolsNumber, $this->reelStrip);
+    public function playSlot(
+        PlaySlotInput $playInput,
+        RandomGridGenerator $randomGridGenerator
+    ): GameOutcome {
+        $grid = $randomGridGenerator->nextGrid($this->reelsNumber, $this->symbolsNumber, $this->reelStrip);
 
         $winningPaylines = $grid->getWinningPaylines($this->paylines);
 

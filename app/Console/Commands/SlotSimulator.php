@@ -5,9 +5,10 @@ namespace App\Console\Commands;
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Games\Repository\GameRepository;
-use App\Domain\Games\Services\RandomGridGenerator;
+use App\Domain\Games\Slot\RandomGridGenerator;
 use App\Domain\Games\Slot\ValueObjects\PlaySlotInput;
 use App\Domain\User\UserId;
+use App\Infrastructure\Services\PHPSeededRandomNumberGenerator;
 use Illuminate\Console\Command;
 
 class SlotSimulator extends Command
@@ -28,7 +29,6 @@ class SlotSimulator extends Command
 
     public function __construct(
         private readonly GameRepository $gameRepository,
-        private readonly RandomGridGenerator $rgg
     ) {
         parent::__construct();
     }
@@ -51,13 +51,19 @@ class SlotSimulator extends Command
 
         $numberOfCycles = $this->ask('Enter number of simulation cycles');
 
+        $seed = $this->ask('Enter seed');
+
+        $rgg = new RandomGridGenerator(
+            new PHPSeededRandomNumberGenerator($seed)
+        );
+
         $totalBets = 0;
         $totalWins = 0;
 
         for ($i = 0; $i < $numberOfCycles; $i++) {
             $totalBets += $betAmount;
 
-            $gameOutcome = $slotGame->playSlot($playInput, $this->rgg);
+            $gameOutcome = $slotGame->playSlot($playInput, $rgg);
 
             $winAmount = $gameOutcome->winAmount->getValue();
 

@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Infrastructure\Services;
+namespace App\Domain\Games\Slot;
 
 use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Games\Services\RandomGridGenerator;
 use App\Domain\Games\Slot\ValueObjects\Grid;
 use App\Domain\Games\Slot\ValueObjects\GridInt;
 use App\Domain\Games\Slot\ValueObjects\ReelStrip;
-use Throwable;
+use App\Domain\Services\RandomNumberGenerator;
 
-class PHPRandomGridGenerator implements RandomGridGenerator
+class RandomGridGenerator
 {
+    public function __construct(private readonly RandomNumberGenerator $generator)
+    {
+    }
+
     /**
      * @throws InvalidArgumentException
      */
@@ -21,11 +24,7 @@ class PHPRandomGridGenerator implements RandomGridGenerator
         $grid = [];
 
         for ($i = 0; $i < $reelsNumber->getValue(); $i++) {
-            $pos = 0;
-
-            try {
-                $pos = random_int(0, count($reelStripSymbols) - 1);
-            } catch (Throwable) {}
+            $pos = $this->generator->getNextRandom(0, count($reelStripSymbols) - 1);
 
             $reel = [];
 

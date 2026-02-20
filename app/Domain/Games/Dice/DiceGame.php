@@ -6,12 +6,12 @@ use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Games\Common\GameOutcome;
 use App\Domain\Games\Common\GameType;
 use App\Domain\Games\Common\OutcomeStatus;
-use App\Domain\Games\Services\RandomDiceNumberGenerator;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
 use App\Domain\Games\Game;
 use App\Domain\Games\GameId;
 use App\Domain\Common\ValueObjects\BetMultiplier;
 use App\Domain\Common\ValueObjects\WinAmount;
+use Random\RandomException;
 
 final class DiceGame extends Game
 {

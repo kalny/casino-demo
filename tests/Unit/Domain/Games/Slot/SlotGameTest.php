@@ -5,7 +5,7 @@ namespace Tests\Unit\Domain\Games\Slot;
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Games\GameId;
-use App\Domain\Games\Services\RandomGridGenerator;
+use App\Domain\Games\Slot\RandomGridGenerator;
 use App\Domain\Games\Slot\SlotGame;
 use App\Domain\Games\Slot\ValueObjects\Grid;
 use App\Domain\Games\Slot\ValueObjects\GridInt;

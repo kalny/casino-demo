@@ -1,15 +1,16 @@
 <?php
 
-namespace Tests\Unit\Infrastructure\Services;
+namespace Tests\Unit\Domain\Games\Slot;
 
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Games\Slot\ValueObjects\GridInt;
 use App\Domain\Games\Slot\ValueObjects\ReelStrip;
 use App\Domain\Games\Slot\ValueObjects\SymbolsCollection;
-use App\Infrastructure\Services\PHPRandomGridGenerator;
+use App\Domain\Games\Slot\RandomGridGenerator;
+use App\Domain\Services\RandomNumberGenerator;
 use Tests\TestCase;
 
-class PHPRandomGridGeneratorTest extends TestCase
+class RandomGridGeneratorTest extends TestCase
 {
     /**
      * @throws InvalidArgumentException
@@ -28,8 +29,14 @@ class PHPRandomGridGeneratorTest extends TestCase
             $symbolsCollection
         );
 
-        $rng = new PHPRandomGridGenerator();
-        $grid = $rng->nextGrid(
+        $rng = $this->createMock(RandomNumberGenerator::class);
+        $rng
+            ->expects($this->any())
+            ->method('getNextRandom')
+            ->willReturn(2);
+
+        $randomGridGenerator = new RandomGridGenerator($rng);
+        $grid = $randomGridGenerator->nextGrid(
             new GridInt(3),
             new GridInt(3),
             $reelStrip

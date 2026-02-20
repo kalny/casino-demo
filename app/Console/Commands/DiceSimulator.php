@@ -4,12 +4,13 @@ namespace App\Console\Commands;
 
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Games\Dice\RandomDiceNumberGenerator;
 use App\Domain\Games\Dice\ValueObjects\DiceNumber;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceType;
 use App\Domain\Games\Repository\GameRepository;
-use App\Domain\Games\Services\RandomDiceNumberGenerator;
 use App\Domain\User\UserId;
+use App\Infrastructure\Services\PHPSeededRandomNumberGenerator;
 use Illuminate\Console\Command;
 
 class DiceSimulator extends Command
@@ -30,7 +31,6 @@ class DiceSimulator extends Command
 
     public function __construct(
         private readonly GameRepository $gameRepository,
-        private readonly RandomDiceNumberGenerator $rng
     ) {
         parent::__construct();
     }
@@ -61,13 +61,19 @@ class DiceSimulator extends Command
 
         $numberOfCycles = $this->ask('Enter number of simulation cycles');
 
+        $seed = $this->ask('Enter seed');
+
+        $rng = new RandomDiceNumberGenerator(
+            new PHPSeededRandomNumberGenerator($seed)
+        );
+
         $totalBets = 0;
         $totalWins = 0;
 
         for ($i = 0; $i < $numberOfCycles; $i++) {
             $totalBets += $betAmount;
 
-            $gameOutcome = $diceGame->playDice($playInput, $this->rng);
+            $gameOutcome = $diceGame->playDice($playInput, $rng);
 
             $winAmount = $gameOutcome->winAmount->getValue();
 

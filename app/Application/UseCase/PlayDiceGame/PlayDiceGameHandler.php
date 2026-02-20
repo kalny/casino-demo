@@ -6,12 +6,12 @@ use App\Application\Ports\TransactionManager;
 use App\Domain\Exceptions\InsufficientFundsException;
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Games\Common\GameOutcome;
+use App\Domain\Games\Dice\RandomDiceNumberGenerator;
 use App\Domain\Games\Dice\ValueObjects\DiceNumber;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceType;
 use App\Domain\Games\Repository\GameOutcomeRepository;
 use App\Domain\Games\Repository\GameRepository;
-use App\Domain\Games\Services\RandomDiceNumberGenerator;
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\User\Repository\UserRepository;
 
