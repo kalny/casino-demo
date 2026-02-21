@@ -6,12 +6,14 @@ use App\Application\Ports\TransactionManager;
 use App\Domain\Exceptions\InsufficientFundsException;
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Games\Common\GameOutcome;
+use App\Domain\Games\GameId;
 use App\Domain\Games\Repository\GameOutcomeRepository;
 use App\Domain\Games\Repository\GameRepository;
 use App\Domain\Games\Slot\RandomGridGenerator;
 use App\Domain\Games\Slot\ValueObjects\PlaySlotInput;
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\User\Repository\UserRepository;
+use App\Domain\User\UserId;
 
 class PlaySlotGameHandler
 {
@@ -30,8 +32,8 @@ class PlaySlotGameHandler
      */
     public function handle(PlaySlotGameCommand $command): GameOutcome
     {
-        $slotGame = $this->gameRepository->getSlotGameById($command->gameId);
-        $user = $this->userRepository->getById($command->userId);
+        $slotGame = $this->gameRepository->getSlotGameById(new GameId($command->gameId));
+        $user = $this->userRepository->getById(new UserId($command->userId));
 
         $betAmount = new BetAmount($command->betAmount);
 

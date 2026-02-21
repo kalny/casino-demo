@@ -7,8 +7,8 @@ use App\Domain\Exceptions\InvalidArgumentException;
 final readonly class PlayDiceGameCommand
 {
     private function __construct(
-        public int $gameId,
-        public int $userId,
+        public string $gameId,
+        public string $userId,
         public int $betAmount,
         public int $chosenNumber,
         public string $playDiceType,
@@ -18,7 +18,7 @@ final readonly class PlayDiceGameCommand
     /**
      * @throws InvalidArgumentException
      */
-    public static function fromValidated(array $validated, int $gameId, int $userId): self
+    public static function fromValidated(array $validated, string $gameId, string $userId): self
     {
         if (!isset($validated['params']['number']) || !isset($validated['params']['bet_type'])) {
             throw new InvalidArgumentException('params.number and params.bet_type are required.');

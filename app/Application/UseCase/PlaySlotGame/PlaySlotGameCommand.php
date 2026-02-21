@@ -5,13 +5,13 @@ namespace App\Application\UseCase\PlaySlotGame;
 final readonly class PlaySlotGameCommand
 {
     public function __construct(
-        public int $gameId,
-        public int $userId,
+        public string $gameId,
+        public string $userId,
         public int $betAmount
     ) {
     }
 
-    public static function fromValidated(array $validated, int $gameId, int $userId): self
+    public static function fromValidated(array $validated, string $gameId, string $userId): self
     {
         return new self(
             gameId: $gameId,

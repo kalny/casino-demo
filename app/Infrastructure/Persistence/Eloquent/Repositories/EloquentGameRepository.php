@@ -18,10 +18,10 @@ use App\Infrastructure\Persistence\Eloquent\Models\Game as GameEloquentModel;
 
 class EloquentGameRepository implements GameRepository
 {
-    public function getTypeById(int $id): GameType
+    public function getTypeById(GameId $id): GameType
     {
         $gameEloquentModel = GameEloquentModel::query()
-            ->findOrFail($id);
+            ->findOrFail($id->getValue());
 
         return $gameEloquentModel->type;
     }
@@ -30,10 +30,10 @@ class EloquentGameRepository implements GameRepository
      * @throws InvalidArgumentException
      * @throws InvalidGameConfigException
      */
-    public function getDiceGameById(int $id): DiceGame
+    public function getDiceGameById(GameId $id): DiceGame
     {
         $gameEloquentModel = GameEloquentModel::query()
-            ->where('id', $id)
+            ->where('id', $id->getValue())
             ->where('type', GameType::Dice->value)
             ->firstOrFail();
 
@@ -52,10 +52,10 @@ class EloquentGameRepository implements GameRepository
      * @throws InvalidGameConfigException
      * @throws InvalidArgumentException
      */
-    public function getSlotGameById(int $id): SlotGame
+    public function getSlotGameById(GameId $id): SlotGame
     {
         $gameEloquentModel = GameEloquentModel::query()
-            ->where('id', $id)
+            ->where('id', $id->getValue())
             ->where('type', GameType::Slot->value)
             ->firstOrFail();
 

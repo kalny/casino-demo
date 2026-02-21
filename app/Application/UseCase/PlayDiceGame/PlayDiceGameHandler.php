@@ -10,10 +10,12 @@ use App\Domain\Games\Dice\RandomDiceNumberGenerator;
 use App\Domain\Games\Dice\ValueObjects\DiceNumber;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceType;
+use App\Domain\Games\GameId;
 use App\Domain\Games\Repository\GameOutcomeRepository;
 use App\Domain\Games\Repository\GameRepository;
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\User\Repository\UserRepository;
+use App\Domain\User\UserId;
 
 class PlayDiceGameHandler
 {
@@ -32,8 +34,8 @@ class PlayDiceGameHandler
      */
     public function handle(PlayDiceGameCommand $command): GameOutcome
     {
-        $diceGame = $this->gameRepository->getDiceGameById($command->gameId);
-        $user = $this->userRepository->getById($command->userId);
+        $diceGame = $this->gameRepository->getDiceGameById(new GameId($command->gameId));
+        $user = $this->userRepository->getById(new UserId($command->userId));
 
         $betAmount = new BetAmount($command->betAmount);
 

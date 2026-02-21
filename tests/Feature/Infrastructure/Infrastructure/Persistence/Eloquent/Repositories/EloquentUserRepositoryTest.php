@@ -3,7 +3,6 @@
 namespace Tests\Feature\Infrastructure\Infrastructure\Persistence\Eloquent\Repositories;
 
 use App\Domain\Common\ValueObjects\Email;
-use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\User\User;
 use App\Domain\User\UserId;
 use App\Infrastructure\Persistence\Eloquent\Models\User as UserEloquentModel;
@@ -41,13 +40,10 @@ class EloquentUserRepositoryTest extends TestCase
         );
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
     public function testSave(): void
     {
         $user = new User(
-            id: new UserId(1),
+            id: new UserId('id'),
             name:'Test User',
             email: new Email('testuser@example.com'),
             password: 'password',
@@ -85,7 +81,7 @@ class EloquentUserRepositoryTest extends TestCase
     {
         $userEloquentModel = UserEloquentModel::factory()->create();
 
-        $user = $this->repository->getById($userEloquentModel->id);
+        $user = $this->repository->getById(new UserId($userEloquentModel->id));
 
         $this->assertSame($userEloquentModel->id, $user->getId()->getValue());
     }
@@ -94,6 +90,6 @@ class EloquentUserRepositoryTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $this->repository->getById(1);
+        $this->repository->getById(new UserId('id'));
     }
 }

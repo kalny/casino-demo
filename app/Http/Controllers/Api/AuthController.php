@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Application\UseCase\LoginUser\LoginUserHandler;
 use App\Application\UseCase\LogoutUser\LogoutUserHandler;
 use App\Application\UseCase\RegisterUser\RegisterUserHandler;
+use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Exceptions\InvalidCredentialsException;
 use App\Domain\Exceptions\UserAlreadyExistsException;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,7 @@ class AuthController extends Controller
 {
     /**
      * @throws UserAlreadyExistsException
+     * @throws InvalidArgumentException
      */
     public function register(RegisterRequest $request, RegisterUserHandler $handler): UserResource
     {

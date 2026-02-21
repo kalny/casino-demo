@@ -69,7 +69,7 @@ class SlotGameTest extends TestCase
         );
 
         $playSlotInput = new PlaySlotInput(
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100)
         );
 
@@ -140,7 +140,7 @@ class SlotGameTest extends TestCase
         );
 
         $playSlotInput = new PlaySlotInput(
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100)
         );
 

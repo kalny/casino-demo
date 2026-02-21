@@ -28,7 +28,7 @@ class DiceGameTest extends TestCase
         );
 
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             chosenNumber: new DiceNumber(4),
             playDiceType: PlayDiceType::Over,
@@ -58,7 +58,7 @@ class DiceGameTest extends TestCase
         );
 
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             chosenNumber: new DiceNumber(4),
             playDiceType: PlayDiceType::Under,
@@ -87,7 +87,7 @@ class DiceGameTest extends TestCase
         );
 
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             chosenNumber: new DiceNumber(4),
             playDiceType: PlayDiceType::Over,
@@ -116,7 +116,7 @@ class DiceGameTest extends TestCase
         );
 
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             chosenNumber: new DiceNumber(4),
             playDiceType: PlayDiceType::Under,

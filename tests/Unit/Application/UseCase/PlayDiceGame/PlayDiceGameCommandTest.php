@@ -21,10 +21,10 @@ class PlayDiceGameCommandTest extends TestCase
             ]
         ];
 
-        $command = PlayDiceGameCommand::fromValidated($validatedArray, 1, 1);
+        $command = PlayDiceGameCommand::fromValidated($validatedArray, 'id', 'id');
 
-        $this->assertSame(1, $command->gameId);
-        $this->assertSame(1, $command->userId);
+        $this->assertSame('id', $command->gameId);
+        $this->assertSame('id', $command->userId);
         $this->assertSame(100, $command->betAmount);
         $this->assertSame(2, $command->chosenNumber);
         $this->assertSame('over', $command->playDiceType);

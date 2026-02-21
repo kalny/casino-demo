@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Infrastructure\Services;
 
+use App\Domain\User\UserId;
 use App\Infrastructure\Persistence\Eloquent\Models\User;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentUserRepository;
 use App\Infrastructure\Services\LaravelTokenManager;
@@ -17,7 +18,7 @@ class LaravelTokenManagerTest extends TestCase
     {
         $userEloquentModel = User::factory()->create();
         $userRepository = new EloquentUserRepository();
-        $user = $userRepository->getById($userEloquentModel->id);
+        $user = $userRepository->getById(new UserId($userEloquentModel->id));
 
         $laravelTokenManager = new LaravelTokenManager();
 

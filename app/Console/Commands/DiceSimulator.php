@@ -8,7 +8,9 @@ use App\Domain\Games\Dice\RandomDiceNumberGenerator;
 use App\Domain\Games\Dice\ValueObjects\DiceNumber;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
 use App\Domain\Games\Dice\ValueObjects\PlayDiceType;
+use App\Domain\Games\GameId;
 use App\Domain\Games\Repository\GameRepository;
+use App\Domain\Services\IdGenerator;
 use App\Domain\User\UserId;
 use App\Infrastructure\Services\PHPSeededRandomNumberGenerator;
 use Illuminate\Console\Command;
@@ -31,6 +33,7 @@ class DiceSimulator extends Command
 
     public function __construct(
         private readonly GameRepository $gameRepository,
+        private readonly IdGenerator $idGenerator,
     ) {
         parent::__construct();
     }
@@ -42,7 +45,7 @@ class DiceSimulator extends Command
     public function handle(): void
     {
         $gameId = $this->ask('Enter Dice Game ID');
-        $diceGame = $this->gameRepository->getDiceGameById($gameId);
+        $diceGame = $this->gameRepository->getDiceGameById(new GameId($gameId));
 
         $betAmount = $this->ask('Enter bet amount');
         $diceNumber = $this->ask('Enter dice number');
@@ -53,7 +56,7 @@ class DiceSimulator extends Command
         );
 
         $playInput = new PlayDiceInput(
-            userId: new UserId(1), // fake
+            userId: new UserId($this->idGenerator->generate()), // fake
             betAmount: new BetAmount($betAmount),
             chosenNumber: new DiceNumber($diceNumber),
             playDiceType: PlayDiceType::from($playDiceType)

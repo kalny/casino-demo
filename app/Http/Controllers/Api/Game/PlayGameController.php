@@ -6,6 +6,7 @@ use App\Application\GameResolver;
 use App\Domain\Exceptions\InsufficientFundsException;
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Exceptions\InvalidGameTypeException;
+use App\Domain\Games\GameId;
 use App\Domain\Games\Repository\GameRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Game\PlayGameRequest;
@@ -19,12 +20,12 @@ class PlayGameController extends Controller
      * @throws InvalidGameTypeException
      */
     public function play(
-        int $id,
+        string $id,
         PlayGameRequest $request,
         GameResolver $gameResolver,
         GameRepository $gameRepository,
     ): GameResultResource {
-        $gameType = $gameRepository->getTypeById($id);
+        $gameType = $gameRepository->getTypeById(new GameId($id));
         $gameOutcome = $gameResolver->resolveGame($gameType, $request->validated(), $id, $request->user()->id);
 
         return new GameResultResource($gameOutcome);

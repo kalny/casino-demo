@@ -11,7 +11,6 @@ use App\Domain\Games\Game;
 use App\Domain\Games\GameId;
 use App\Domain\Common\ValueObjects\BetMultiplier;
 use App\Domain\Common\ValueObjects\WinAmount;
-use Random\RandomException;
 
 final class DiceGame extends Game
 {

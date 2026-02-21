@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Application\Ports\TransactionManager;
 use App\Domain\Games\Repository\GameOutcomeRepository;
 use App\Domain\Games\Repository\GameRepository;
+use App\Domain\Services\IdGenerator;
 use App\Domain\Services\PasswordHasher;
 use App\Domain\Services\RandomNumberGenerator;
 use App\Domain\Services\TokenManager;
@@ -13,6 +14,7 @@ use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentGameOutcomeRepo
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentGameRepository;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentUserRepository;
 use App\Infrastructure\Persistence\LaravelTransactionManager;
+use App\Infrastructure\Services\LaravelIdGenerator;
 use App\Infrastructure\Services\LaravelPasswordHasher;
 use App\Infrastructure\Services\LaravelTokenManager;
 use App\Infrastructure\Services\PHPRandomNumberGenerator;
@@ -29,6 +31,7 @@ class CasinoServiceProvider extends ServiceProvider
         GameOutcomeRepository::class => EloquentGameOutcomeRepository::class,
         TransactionManager::class => LaravelTransactionManager::class,
         RandomNumberGenerator::class => PHPRandomNumberGenerator::class,
+        IdGenerator::class => LaravelIdGenerator::class,
     ];
 
     /**

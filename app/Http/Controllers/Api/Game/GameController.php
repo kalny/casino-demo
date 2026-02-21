@@ -14,7 +14,7 @@ class GameController extends Controller
         return GameResource::collection(Game::paginate());
     }
 
-    public function show(int $id): GameResource
+    public function show(string $id): GameResource
     {
         return new GameResource(Game::findOrFail($id));
     }

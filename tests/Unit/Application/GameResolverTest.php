@@ -45,7 +45,7 @@ class GameResolverTest extends TestCase
 
         $this->diceGameOutcome = new GameOutcome(
             gameId: new GameId(1),
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             winAmount: new WinAmount(200),
             outcomeStatus: OutcomeStatus::Win,
@@ -57,7 +57,7 @@ class GameResolverTest extends TestCase
 
         $this->slotGameOutcome = new GameOutcome(
             gameId: new GameId(2),
-            userId: new UserId(2),
+            userId: new UserId('id2'),
             betAmount: new BetAmount(100),
             winAmount: new WinAmount(500),
             outcomeStatus: OutcomeStatus::Win,

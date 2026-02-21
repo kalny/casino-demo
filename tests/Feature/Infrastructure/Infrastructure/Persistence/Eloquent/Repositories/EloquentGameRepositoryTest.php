@@ -5,6 +5,7 @@ namespace Tests\Feature\Infrastructure\Infrastructure\Persistence\Eloquent\Repos
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Exceptions\InvalidGameConfigException;
 use App\Domain\Games\Common\GameType;
+use App\Domain\Games\GameId;
 use App\Infrastructure\Persistence\Eloquent\Models\Game;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentGameRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -30,7 +31,7 @@ class EloquentGameRepositoryTest extends TestCase
             'type' => GameType::Slot->value
         ]);
 
-        $type = $this->repository->getTypeById($gameEloquentModel->id);
+        $type = $this->repository->getTypeById(new GameId($gameEloquentModel->id));
 
         $this->assertSame(GameType::Slot->value, $type->value);
     }
@@ -39,7 +40,7 @@ class EloquentGameRepositoryTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $this->repository->getTypeById(1);
+        $this->repository->getTypeById(new GameId('id'));
     }
 
     /**
@@ -55,7 +56,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $game = $this->repository->getDiceGameById($diceGame->id);
+        $game = $this->repository->getDiceGameById(new GameId($diceGame->id));
 
         $this->assertSame($diceGame->id, $game->getId()->getValue());
     }
@@ -68,7 +69,7 @@ class EloquentGameRepositoryTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $this->repository->getDiceGameById(1);
+        $this->repository->getDiceGameById(new GameId('id'));
     }
 
     /**
@@ -86,7 +87,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getDiceGameById($slotGame->id);
+        $this->repository->getDiceGameById(new GameId($slotGame->id));
     }
 
     /**
@@ -101,7 +102,7 @@ class EloquentGameRepositoryTest extends TestCase
             'config' => []
         ]);
 
-        $this->repository->getDiceGameById($diceGame->id);
+        $this->repository->getDiceGameById(new GameId($diceGame->id));
     }
 
     /**
@@ -125,7 +126,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $game = $this->repository->getSlotGameById($slotGame->id);
+        $game = $this->repository->getSlotGameById(new GameId($slotGame->id));
 
         $this->assertSame($slotGame->id, $game->getId()->getValue());
     }
@@ -138,7 +139,7 @@ class EloquentGameRepositoryTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $this->repository->getSlotGameById(1);
+        $this->repository->getSlotGameById(new GameId('id'));
     }
 
     /**
@@ -156,7 +157,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById($diceGame->id);
+        $this->repository->getSlotGameById(new GameId($diceGame->id));
     }
 
     /**
@@ -180,7 +181,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById($slotGame->id);
+        $this->repository->getSlotGameById(new GameId($slotGame->id));
     }
 
     /**
@@ -204,7 +205,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById($slotGame->id);
+        $this->repository->getSlotGameById(new GameId($slotGame->id));
     }
 
     /**
@@ -228,7 +229,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById($slotGame->id);
+        $this->repository->getSlotGameById(new GameId($slotGame->id));
     }
 
     /**
@@ -248,7 +249,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById($slotGame->id);
+        $this->repository->getSlotGameById(new GameId($slotGame->id));
     }
 
     /**
@@ -272,6 +273,6 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById($slotGame->id);
+        $this->repository->getSlotGameById(new GameId($slotGame->id));
     }
 }

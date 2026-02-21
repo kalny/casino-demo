@@ -4,7 +4,6 @@ namespace Tests\Unit\Application\UseCase\LoginUser;
 
 use App\Application\UseCase\LoginUser\LoginUserCommand;
 use App\Application\UseCase\LoginUser\LoginUserHandler;
-use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Exceptions\InvalidCredentialsException;
 use App\Domain\Services\PasswordHasher;
 use App\Domain\Services\TokenManager;
@@ -37,7 +36,6 @@ class LoginUserHandlerTest extends TestCase
 
     /**
      * @throws InvalidCredentialsException
-     * @throws InvalidArgumentException
      */
     public function testLoginUserSuccess(): void
     {
@@ -52,7 +50,7 @@ class LoginUserHandlerTest extends TestCase
         $user
             ->expects($this->once())
             ->method('getId')
-            ->willReturn(new UserId(1));
+            ->willReturn(new UserId('id'));
 
         $this->tokenManager
             ->expects($this->once())
@@ -70,7 +68,7 @@ class LoginUserHandlerTest extends TestCase
         $result = $this->loginUserHandler->handle($command);
 
         $this->assertSame('token', $result->token);
-        $this->assertSame(1, $result->id);
+        $this->assertSame('id', $result->id);
     }
 
     public function testLoginUserNotFound(): void

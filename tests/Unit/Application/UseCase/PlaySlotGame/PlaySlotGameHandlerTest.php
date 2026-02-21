@@ -43,7 +43,7 @@ class PlaySlotGameHandlerTest extends TestCase
         parent::setUp();
 
         $this->user = new User(
-            id: new UserId(1),
+            id: new UserId('id'),
             name: 'Test User',
             email: new Email('test@example.com'),
             password: 'test',
@@ -60,7 +60,6 @@ class PlaySlotGameHandlerTest extends TestCase
         $this->userRepository
             ->expects($this->any())
             ->method('getById')
-            ->with(1)
             ->willReturn($this->user);
 
         $this->userRepository
@@ -121,9 +120,8 @@ class PlaySlotGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getSlotGameById')
-            ->with(1)
             ->willReturn(new SlotGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Slot Game',
                 reelsNumber: new GridInt(3),
                 symbolsNumber: new GridInt(3),
@@ -179,9 +177,8 @@ class PlaySlotGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getSlotGameById')
-            ->with(1)
             ->willReturn(new SlotGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Slot Game',
                 reelsNumber: new GridInt(3),
                 symbolsNumber: new GridInt(3),
@@ -240,9 +237,8 @@ class PlaySlotGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getSlotGameById')
-            ->with(1)
             ->willReturn(new SlotGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Slot Game',
                 reelsNumber: new GridInt(3),
                 symbolsNumber: new GridInt(3),

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Api\Game;
 
-use App\DTO\Api\Game\PlayGameDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,13 +26,5 @@ class PlayGameRequest extends FormRequest
             'amount' => ['required', 'integer', 'min:1'],
             'params' => ['nullable', 'array'],
         ];
-    }
-
-    public function getDTO(): PlayGameDTO
-    {
-        return new PlayGameDTO(
-            amount: $this->validated('amount'),
-            params: $this->validated('params'),
-        );
     }
 }

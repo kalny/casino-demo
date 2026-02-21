@@ -6,6 +6,7 @@ use App\Application\UseCase\UserResponse;
 use App\Domain\Common\ValueObjects\Email;
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Exceptions\UserAlreadyExistsException;
+use App\Domain\Services\IdGenerator;
 use App\Domain\Services\PasswordHasher;
 use App\Domain\Services\TokenManager;
 use App\Domain\User\User;
@@ -17,7 +18,8 @@ final class RegisterUserHandler
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly PasswordHasher $passwordHasher,
-        private readonly TokenManager $tokenManager
+        private readonly TokenManager $tokenManager,
+        private readonly IdGenerator $idGenerator
     ) {
     }
 
@@ -32,7 +34,7 @@ final class RegisterUserHandler
         }
 
         $user = new User(
-            id: new UserId(),
+            id: new UserId($this->idGenerator->generate()),
             name: $command->name,
             email: new Email($command->email),
             password: $this->passwordHasher->hash($command->password),

@@ -6,6 +6,7 @@ use App\Application\UseCase\RegisterUser\RegisterUserCommand;
 use App\Application\UseCase\RegisterUser\RegisterUserHandler;
 use App\Domain\Exceptions\InvalidArgumentException;
 use App\Domain\Exceptions\UserAlreadyExistsException;
+use App\Domain\Services\IdGenerator;
 use App\Domain\Services\PasswordHasher;
 use App\Domain\Services\TokenManager;
 use App\Domain\User\Repository\UserRepository;
@@ -16,6 +17,7 @@ class RegisterUserHandlerTest extends TestCase
     private UserRepository $userRepository;
     private TokenManager $tokenManager;
     private RegisterUserHandler $registerUserHandler;
+    private IdGenerator $idGenerator;
 
     protected function setUp(): void
     {
@@ -24,11 +26,18 @@ class RegisterUserHandlerTest extends TestCase
         $this->userRepository = $this->createMock(UserRepository::class);
         $passwordHasher = $this->createMock(PasswordHasher::class);
         $this->tokenManager = $this->createMock(TokenManager::class);
+        $this->idGenerator = $this->createMock(IdGenerator::class);
+
+        $this->idGenerator
+            ->expects($this->any())
+            ->method('generate')
+            ->willReturn('id');
 
         $this->registerUserHandler = new RegisterUserHandler(
             userRepository:  $this->userRepository,
             passwordHasher: $passwordHasher,
-            tokenManager: $this->tokenManager
+            tokenManager: $this->tokenManager,
+            idGenerator: $this->idGenerator
         );
     }
 

@@ -25,7 +25,7 @@ class GameResolver
      * @throws InvalidArgumentException
      * @throws InvalidGameTypeException
      */
-    public function resolveGame(GameType $gameType, array $validatedData, int $gameId, int $userId): GameOutcome
+    public function resolveGame(GameType $gameType, array $validatedData, string $gameId, string $userId): GameOutcome
     {
         if ($gameType === GameType::Dice) {
             $command = PlayDiceGameCommand::fromValidated($validatedData, $gameId, $userId);

@@ -32,15 +32,12 @@ class PlayDiceGameHandlerTest extends TestCase
     private TransactionManager $transactionManager;
     private RandomDiceNumberGenerator $randomDiceNumberGenerator;
 
-    /**
-     * @throws InvalidArgumentException
-     */
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->user = new User(
-            id: new UserId(1),
+            id: new UserId('id'),
             name: 'Test User',
             email: new Email('test@example.com'),
             password: 'test',
@@ -57,7 +54,6 @@ class PlayDiceGameHandlerTest extends TestCase
         $this->userRepository
             ->expects($this->any())
             ->method('getById')
-            ->with(1)
             ->willReturn($this->user);
 
         $this->userRepository
@@ -79,9 +75,8 @@ class PlayDiceGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getDiceGameById')
-            ->with(1)
             ->willReturn(new DiceGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Dice Game',
                 multiplier: new BetMultiplier(3)
             ));
@@ -125,9 +120,8 @@ class PlayDiceGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getDiceGameById')
-            ->with(1)
             ->willReturn(new DiceGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Dice Game',
                 multiplier: new BetMultiplier(3)
             ));
@@ -171,9 +165,8 @@ class PlayDiceGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getDiceGameById')
-            ->with(1)
             ->willReturn(new DiceGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Dice Game',
                 multiplier: new BetMultiplier(3)
             ));
@@ -217,9 +210,8 @@ class PlayDiceGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getDiceGameById')
-            ->with(1)
             ->willReturn(new DiceGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Dice Game',
                 multiplier: new BetMultiplier(3)
             ));
@@ -266,9 +258,8 @@ class PlayDiceGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getDiceGameById')
-            ->with(1)
             ->willReturn(new DiceGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Dice Game',
                 multiplier: new BetMultiplier(3)
             ));
@@ -306,9 +297,8 @@ class PlayDiceGameHandlerTest extends TestCase
         $this->gameRepository
             ->expects($this->any())
             ->method('getDiceGameById')
-            ->with(1)
             ->willReturn(new DiceGame(
-                gameId: new GameId(1),
+                gameId: new GameId('id'),
                 name: 'Dice Game',
                 multiplier: new BetMultiplier(3)
             ));

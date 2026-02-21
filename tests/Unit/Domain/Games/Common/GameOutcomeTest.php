@@ -23,7 +23,7 @@ class GameOutcomeTest extends TestCase
     {
         $testOutcome = new GameOutcome(
             gameId: new GameId(1),
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             winAmount: new WinAmount(200),
             outcomeStatus: OutcomeStatus::Win,
@@ -43,7 +43,7 @@ class GameOutcomeTest extends TestCase
     {
         $testOutcome = new GameOutcome(
             gameId: new GameId(1),
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             winAmount: WinAmount::zero(),
             outcomeStatus: OutcomeStatus::Loss,

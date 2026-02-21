@@ -4,9 +4,11 @@ namespace App\Console\Commands;
 
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Games\GameId;
 use App\Domain\Games\Repository\GameRepository;
 use App\Domain\Games\Slot\RandomGridGenerator;
 use App\Domain\Games\Slot\ValueObjects\PlaySlotInput;
+use App\Domain\Services\IdGenerator;
 use App\Domain\User\UserId;
 use App\Infrastructure\Services\PHPSeededRandomNumberGenerator;
 use Illuminate\Console\Command;
@@ -29,6 +31,7 @@ class SlotSimulator extends Command
 
     public function __construct(
         private readonly GameRepository $gameRepository,
+        private readonly IdGenerator $idGenerator,
     ) {
         parent::__construct();
     }
@@ -40,12 +43,12 @@ class SlotSimulator extends Command
     public function handle(): void
     {
         $gameId = $this->ask('Enter Slot Game ID');
-        $slotGame = $this->gameRepository->getSlotGameById($gameId);
+        $slotGame = $this->gameRepository->getSlotGameById(new GameId($gameId));
 
         $betAmount = $this->ask('Enter bet amount');
 
         $playInput = new PlaySlotInput(
-            userId: new UserId(1), // fake
+            userId: new UserId($this->idGenerator->generate()), // fake
             betAmount: new BetAmount($betAmount)
         );
 

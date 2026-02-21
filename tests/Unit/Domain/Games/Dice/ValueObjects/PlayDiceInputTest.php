@@ -18,7 +18,7 @@ class PlayDiceInputTest extends TestCase
     public function testCreatePlayDiceInputWithOverType(): void
     {
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             chosenNumber: new DiceNumber(1),
             playDiceType: PlayDiceType::Over,
@@ -33,7 +33,7 @@ class PlayDiceInputTest extends TestCase
     public function testCreatePlayDiceInputWithUnderType(): void
     {
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId(1),
+            userId: new UserId('id'),
             betAmount: new BetAmount(100),
             chosenNumber: new DiceNumber(1),
             playDiceType: PlayDiceType::Under,

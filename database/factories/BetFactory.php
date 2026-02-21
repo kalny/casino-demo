@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Infrastructure\Persistence\Eloquent\Models\Bet;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Bet>
@@ -20,6 +21,7 @@ class BetFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => Str::uuid()->toString(),
             'amount' => $this->faker->randomNumber(4, 0),
             'bet_data' => [],
         ];

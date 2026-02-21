@@ -69,12 +69,12 @@ class EloquentUserRepository implements UserRepository
         );
     }
 
-    public function getById(int $id): User
+    public function getById(UserId $id): User
     {
-        $userEloquentModel = UserEloquentModel::findOrFail($id);
+        $userEloquentModel = UserEloquentModel::findOrFail($id->getValue());
 
         return new User(
-            id: new UserId($userEloquentModel->id),
+            id: $id,
             name: $userEloquentModel->name,
             email: $userEloquentModel->email,
             password: $userEloquentModel->password,

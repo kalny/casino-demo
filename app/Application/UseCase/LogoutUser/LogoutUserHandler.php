@@ -4,6 +4,7 @@ namespace App\Application\UseCase\LogoutUser;
 
 use App\Domain\Services\TokenManager;
 use App\Domain\User\Repository\UserRepository;
+use App\Domain\User\UserId;
 
 class LogoutUserHandler
 {
@@ -13,9 +14,9 @@ class LogoutUserHandler
     ) {
     }
 
-    public function handle(int $id): void
+    public function handle(string $id): void
     {
-        $user = $this->userRepository->getById($id);
+        $user = $this->userRepository->getById(new UserId($id));
         $this->tokenManager->delete($user);
     }
 }

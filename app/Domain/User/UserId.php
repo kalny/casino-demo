@@ -2,21 +2,13 @@
 
 namespace App\Domain\User;
 
-use App\Domain\Exceptions\InvalidArgumentException;
-
 final readonly class UserId
 {
-    /**
-     * @throws InvalidArgumentException
-     */
-    public function __construct(private int $value = 0)
+    public function __construct(private string $value)
     {
-        if ($value < 0) {
-            throw new InvalidArgumentException('Value must be positive');
-        }
     }
 
-    public function getValue(): int
+    public function getValue(): string
     {
         return $this->value;
     }
