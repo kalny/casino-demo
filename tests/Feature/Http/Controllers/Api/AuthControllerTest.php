@@ -24,7 +24,7 @@ class AuthControllerTest extends TestCase
 
         $this->user = User::factory()->create([
             'name' => 'Already Exists',
-            'email' => new Email('alreadyexisis@example.com')
+            'email' => Email::fromString('alreadyexisis@example.com')
         ]);
     }
 

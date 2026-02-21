@@ -13,7 +13,7 @@ class DiceNumberTest extends TestCase
      */
     public function testCreateValidDiceNumberFromInteger(): void
     {
-        $diceNumber = new DiceNumber(1);
+        $diceNumber = DiceNumber::fromInt(1);
 
         $this->assertSame(1, $diceNumber->getValue());
     }
@@ -22,14 +22,14 @@ class DiceNumberTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new DiceNumber(0);
+        DiceNumber::fromInt(0);
     }
 
     public function testCreateDiceNumberFromGreaterInteger(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new DiceNumber(7);
+        DiceNumber::fromInt(7);
     }
 
     /**
@@ -37,9 +37,9 @@ class DiceNumberTest extends TestCase
      */
     public function testEqualsCompareDiceNumberWithLesserIntegerTrue(): void
     {
-        $diceNumber = new DiceNumber(4);
+        $diceNumber = DiceNumber::fromInt(4);
 
-        $this->assertTrue($diceNumber->gt(new DiceNumber(1)));
+        $this->assertTrue($diceNumber->gt(DiceNumber::fromInt(1)));
     }
 
     /**
@@ -47,9 +47,9 @@ class DiceNumberTest extends TestCase
      */
     public function testEqualsCompareDiceNumberWithLesserIntegerFalse(): void
     {
-        $diceNumber = new DiceNumber(4);
+        $diceNumber = DiceNumber::fromInt(4);
 
-        $this->assertFalse($diceNumber->gt(new DiceNumber(5)));
+        $this->assertFalse($diceNumber->gt(DiceNumber::fromInt(5)));
     }
 
     /**
@@ -57,9 +57,9 @@ class DiceNumberTest extends TestCase
      */
     public function testEqualsCompareDiceNumberWithGreaterIntegerTrue(): void
     {
-        $diceNumber = new DiceNumber(4);
+        $diceNumber = DiceNumber::fromInt(4);
 
-        $this->assertTrue($diceNumber->lt(new DiceNumber(6)));
+        $this->assertTrue($diceNumber->lt(DiceNumber::fromInt(6)));
     }
 
     /**
@@ -67,8 +67,8 @@ class DiceNumberTest extends TestCase
      */
     public function testEqualsCompareDiceNumberWithGreaterIntegerFalse(): void
     {
-        $diceNumber = new DiceNumber(4);
+        $diceNumber = DiceNumber::fromInt(4);
 
-        $this->assertFalse($diceNumber->lt(new DiceNumber(3)));
+        $this->assertFalse($diceNumber->lt(DiceNumber::fromInt(3)));
     }
 }

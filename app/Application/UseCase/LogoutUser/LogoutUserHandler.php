@@ -16,7 +16,7 @@ class LogoutUserHandler
 
     public function handle(string $id): void
     {
-        $user = $this->userRepository->getById(new UserId($id));
+        $user = $this->userRepository->getById(UserId::fromString($id));
         $this->tokenManager->delete($user);
     }
 }

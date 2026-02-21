@@ -43,9 +43,9 @@ class PlaySlotGameHandlerTest extends TestCase
         parent::setUp();
 
         $this->user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'test',
             balance: 1000
         );
@@ -99,7 +99,7 @@ class PlaySlotGameHandlerTest extends TestCase
      */
     public function testPlaySlotWin(): void
     {
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -107,7 +107,7 @@ class PlaySlotGameHandlerTest extends TestCase
             ['name' => 'E', 'multiplier' => 9],
         ]);
 
-        $paylines = new Paylines([
+        $paylines = Paylines::fromArray([
             [[0, 1], [1, 1], [2, 1]],
             [[0, 0], [1, 1], [2, 2]],
         ]);
@@ -121,10 +121,10 @@ class PlaySlotGameHandlerTest extends TestCase
             ->expects($this->any())
             ->method('getSlotGameById')
             ->willReturn(new SlotGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Slot Game',
-                reelsNumber: new GridInt(3),
-                symbolsNumber: new GridInt(3),
+                reelsNumber: GridInt::fromInt(3),
+                symbolsNumber: GridInt::fromInt(3),
                 reelStrip: $reelStrip,
                 paylines: $paylines
             ));
@@ -156,7 +156,7 @@ class PlaySlotGameHandlerTest extends TestCase
      */
     public function testPlaySlotLoss(): void
     {
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -164,7 +164,7 @@ class PlaySlotGameHandlerTest extends TestCase
             ['name' => 'E', 'multiplier' => 9],
         ]);
 
-        $paylines = new Paylines([
+        $paylines = Paylines::fromArray([
             [[0, 0], [1, 0], [2, 0]],
             [[0, 2], [1, 2], [2, 2]],
         ]);
@@ -178,10 +178,10 @@ class PlaySlotGameHandlerTest extends TestCase
             ->expects($this->any())
             ->method('getSlotGameById')
             ->willReturn(new SlotGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Slot Game',
-                reelsNumber: new GridInt(3),
-                symbolsNumber: new GridInt(3),
+                reelsNumber: GridInt::fromInt(3),
+                symbolsNumber: GridInt::fromInt(3),
                 reelStrip: $reelStrip,
                 paylines: $paylines
             ));
@@ -214,9 +214,9 @@ class PlaySlotGameHandlerTest extends TestCase
     {
         $this->expectException(InsufficientFundsException::class);
 
-        $this->user->debit(new BetAmount(1000));
+        $this->user->debit(BetAmount::fromInt(1000));
 
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -224,7 +224,7 @@ class PlaySlotGameHandlerTest extends TestCase
             ['name' => 'E', 'multiplier' => 9],
         ]);
 
-        $paylines = new Paylines([
+        $paylines = Paylines::fromArray([
             [[0, 0], [1, 0], [2, 0]],
             [[0, 2], [1, 2], [2, 2]],
         ]);
@@ -238,10 +238,10 @@ class PlaySlotGameHandlerTest extends TestCase
             ->expects($this->any())
             ->method('getSlotGameById')
             ->willReturn(new SlotGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Slot Game',
-                reelsNumber: new GridInt(3),
-                symbolsNumber: new GridInt(3),
+                reelsNumber: GridInt::fromInt(3),
+                symbolsNumber: GridInt::fromInt(3),
                 reelStrip: $reelStrip,
                 paylines: $paylines
             ));

@@ -13,7 +13,7 @@ class GridIntTest extends TestCase
      */
     public function testCreateValidGridIntFromInteger(): void
     {
-        $gridInt = new GridInt(3);
+        $gridInt = GridInt::fromInt(3);
 
         $this->assertSame(3, $gridInt->getValue());
     }
@@ -25,6 +25,6 @@ class GridIntTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new GridInt(1);
+        GridInt::fromInt(1);
     }
 }

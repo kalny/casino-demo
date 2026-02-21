@@ -34,9 +34,9 @@ final class RegisterUserHandler
         }
 
         $user = new User(
-            id: new UserId($this->idGenerator->generate()),
+            id: UserId::fromString($this->idGenerator->generate()),
             name: $command->name,
-            email: new Email($command->email),
+            email: Email::fromString($command->email),
             password: $this->passwordHasher->hash($command->password),
             balance: 0
         );

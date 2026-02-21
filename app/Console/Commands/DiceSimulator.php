@@ -45,7 +45,7 @@ class DiceSimulator extends Command
     public function handle(): void
     {
         $gameId = $this->ask('Enter Dice Game ID');
-        $diceGame = $this->gameRepository->getDiceGameById(new GameId($gameId));
+        $diceGame = $this->gameRepository->getDiceGameById(GameId::fromString($gameId));
 
         $betAmount = $this->ask('Enter bet amount');
         $diceNumber = $this->ask('Enter dice number');
@@ -56,9 +56,9 @@ class DiceSimulator extends Command
         );
 
         $playInput = new PlayDiceInput(
-            userId: new UserId($this->idGenerator->generate()), // fake
+            userId: UserId::fromString($this->idGenerator->generate()), // fake
             betAmount: new BetAmount($betAmount),
-            chosenNumber: new DiceNumber($diceNumber),
+            chosenNumber: DiceNumber::fromInt($diceNumber),
             playDiceType: PlayDiceType::from($playDiceType)
         );
 

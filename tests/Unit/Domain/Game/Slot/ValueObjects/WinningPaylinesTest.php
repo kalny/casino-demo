@@ -19,7 +19,7 @@ class WinningPaylinesTest extends TestCase
             [[0, 1], [0, 2], [0, 3]],
         ];
 
-        $paylines = new WinningPaylines($paylinesArray, new BetMultiplier(5));
+        $paylines = new WinningPaylines($paylinesArray, BetMultiplier::fromInt(5));
 
         $this->assertSame($paylinesArray, $paylines->getData());
     }
@@ -31,7 +31,7 @@ class WinningPaylinesTest extends TestCase
     {
         $paylinesArray = [];
 
-        $paylines = new WinningPaylines($paylinesArray, new BetMultiplier(5));
+        $paylines = new WinningPaylines($paylinesArray, BetMultiplier::fromInt(5));
 
         $this->assertSame($paylinesArray, $paylines->getData());
     }
@@ -43,7 +43,7 @@ class WinningPaylinesTest extends TestCase
     {
         $paylinesArray = [];
 
-        $paylines = new WinningPaylines($paylinesArray, new BetMultiplier(5));
+        $paylines = new WinningPaylines($paylinesArray, BetMultiplier::fromInt(5));
 
         $this->assertTrue($paylines->isEmpty());
     }
@@ -53,7 +53,7 @@ class WinningPaylinesTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new WinningPaylines($array, new BetMultiplier(5));
+        new WinningPaylines($array, BetMultiplier::fromInt(5));
     }
 
     public static function invalidArraysDataProvider(): array

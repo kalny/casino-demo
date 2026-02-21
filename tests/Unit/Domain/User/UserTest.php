@@ -17,9 +17,9 @@ class UserTest extends TestCase
     public function testCreateValidUser(): void
     {
         $user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'password',
             balance: 100
         );
@@ -38,9 +38,9 @@ class UserTest extends TestCase
             ->willReturn('password_hashed');
 
         $user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: $hasher->hash('password'),
             balance: 100
         );
@@ -59,17 +59,17 @@ class UserTest extends TestCase
     public function testEqualsComparesUsersCorrectly(): void
     {
         $user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'password',
             balance: 100
         );
 
         $anotherUserInstance = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'password',
             balance: 100
         );
@@ -80,17 +80,17 @@ class UserTest extends TestCase
     public function testEqualsComparesUserWithAnotherIdCorrectly(): void
     {
         $user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'password',
             balance: 100
         );
 
         $anotherUserInstance = new User(
-            id: new UserId('id2'),
+            id: UserId::fromString('id2'),
             name: 'Another Test User',
-            email: new Email('another@example.com'),
+            email: Email::fromString('another@example.com'),
             password: 'password',
             balance: 100
         );
@@ -104,14 +104,14 @@ class UserTest extends TestCase
     public function testCreditBalance(): void
     {
         $user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'password',
             balance: 0
         );
 
-        $winAmount = new WinAmount(100);
+        $winAmount = WinAmount::fromInt(100);
         $user->credit($winAmount);
 
         $this->assertSame(100, $user->getBalance());
@@ -124,14 +124,14 @@ class UserTest extends TestCase
     public function testSuccessfullyDebitBalance(): void
     {
         $user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'password',
             balance: 100
         );
 
-        $betAmount = new BetAmount(100);
+        $betAmount = BetAmount::fromInt(100);
         $user->debit($betAmount);
 
         $this->assertSame(0, $user->getBalance());
@@ -145,14 +145,14 @@ class UserTest extends TestCase
         $this->expectException(InsufficientFundsException::class);
 
         $user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'password',
             balance: 100
         );
 
-        $betAmount = new BetAmount(101);
+        $betAmount = BetAmount::fromInt(101);
         $user->debit($betAmount);
     }
 }

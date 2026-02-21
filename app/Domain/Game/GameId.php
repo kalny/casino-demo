@@ -4,8 +4,13 @@ namespace App\Domain\Game;
 
 final readonly class GameId
 {
-    public function __construct(private string $value)
+    private function __construct(private string $value)
     {
+    }
+
+    public static function fromString(string $value): self
+    {
+        return new self($value);
     }
 
     public function getValue(): string

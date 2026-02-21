@@ -42,9 +42,9 @@ class EloquentGameRepository implements GameRepository
         }
 
         return new DiceGame(
-            gameId: new GameId($gameEloquentModel->id),
+            gameId: GameId::fromString($gameEloquentModel->id),
             name: $gameEloquentModel->name,
-            multiplier: new BetMultiplier($gameEloquentModel->config['multiplier'])
+            multiplier: BetMultiplier::fromInt($gameEloquentModel->config['multiplier'])
         );
     }
 
@@ -80,15 +80,15 @@ class EloquentGameRepository implements GameRepository
         }
 
         return new SlotGame(
-            gameId: new GameId($gameEloquentModel->id),
+            gameId: GameId::fromString($gameEloquentModel->id),
             name: $gameEloquentModel->name,
-            reelsNumber: new GridInt($gameEloquentModel->config['reels_number']),
-            symbolsNumber: new GridInt($gameEloquentModel->config['symbols_number']),
+            reelsNumber: GridInt::fromInt($gameEloquentModel->config['reels_number']),
+            symbolsNumber: GridInt::fromInt($gameEloquentModel->config['symbols_number']),
             reelStrip: new ReelStrip(
                 $gameEloquentModel->config['reel_strip'],
-                new SymbolsCollection($gameEloquentModel->config['symbols'])
+                SymbolsCollection::fromArray($gameEloquentModel->config['symbols'])
             ),
-            paylines: new Paylines($gameEloquentModel->config['paylines'])
+            paylines: Paylines::fromArray($gameEloquentModel->config['paylines'])
         );
     }
 }

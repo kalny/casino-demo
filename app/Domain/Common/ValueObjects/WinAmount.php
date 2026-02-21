@@ -9,11 +9,19 @@ final readonly class WinAmount
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(private int $value)
+    private function __construct(private int $value)
     {
         if ($value < 0) {
             throw new InvalidArgumentException('Value must be positive');
         }
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function fromInt(int $value): self
+    {
+        return new self($value);
     }
 
     public function getValue(): int

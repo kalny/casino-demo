@@ -17,7 +17,7 @@ final readonly class Grid
     {
         $reels = [];
         foreach ($gridArray as $reel) {
-            $reels[] = new SymbolsCollection($reel);
+            $reels[] = SymbolsCollection::fromArray($reel);
         }
         $this->grid = $reels;
     }
@@ -33,7 +33,7 @@ final readonly class Grid
     public function getWinningPaylines(Paylines $paylines): WinningPaylines
     {
         $winningPaylinesArray = [];
-        $betMultiplier = new BetMultiplier(0);
+        $betMultiplier = BetMultiplier::fromInt(0);
 
         foreach ($paylines->getData() as $payline) {
 
@@ -50,7 +50,7 @@ final readonly class Grid
                 $paylineSymbols[] = $reelCollection->getData()[$symbolNumber];
             }
 
-            $reelCollection = new SymbolsCollection($paylineSymbols);
+            $reelCollection = SymbolsCollection::fromArray($paylineSymbols);
 
             if ($reelCollection->isWinning()) {
                 $winningPaylinesArray[] = $payline;

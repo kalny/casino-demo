@@ -25,7 +25,7 @@ class PlayGameController extends Controller
         GameResolver $gameResolver,
         GameRepository $gameRepository,
     ): GameResultResource {
-        $gameType = $gameRepository->getTypeById(new GameId($id));
+        $gameType = $gameRepository->getTypeById(GameId::fromString($id));
         $gameOutcome = $gameResolver->resolveGame($gameType, $request->validated(), $id, $request->user()->id);
 
         return new GameResultResource($gameOutcome);

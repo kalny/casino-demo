@@ -17,7 +17,7 @@ class ReelStripTest extends TestCase
     {
         $reelStripArray = ['A', 'B', 'C'];
 
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -37,7 +37,7 @@ class ReelStripTest extends TestCase
 
         $reelStripArray = ['A', 'B'];
 
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],

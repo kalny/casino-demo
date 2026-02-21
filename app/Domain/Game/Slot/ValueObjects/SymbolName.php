@@ -11,11 +11,19 @@ final readonly class SymbolName
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(private string $value)
+    private function __construct(private string $value)
     {
         if (strlen($this->value) < self::MIN_LENGTH) {
             throw new InvalidArgumentException("Symbol name must not be empty");
         }
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function fromString(string $value): self
+    {
+        return new self($value);
     }
 
     public function equals(string $symbolName): bool

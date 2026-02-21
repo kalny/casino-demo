@@ -18,6 +18,6 @@ class RandomDiceNumberGenerator
     public function nextNumber(): DiceNumber
     {
         $randomInt = $this->generator->getNextRandom(DiceNumber::MIN, DiceNumber::MAX);
-        return new DiceNumber($randomInt);
+        return DiceNumber::fromInt($randomInt);
     }
 }

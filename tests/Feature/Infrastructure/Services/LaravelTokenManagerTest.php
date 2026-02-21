@@ -18,7 +18,7 @@ class LaravelTokenManagerTest extends TestCase
     {
         $userEloquentModel = User::factory()->create();
         $userRepository = new EloquentUserRepository();
-        $user = $userRepository->getById(new UserId($userEloquentModel->id));
+        $user = $userRepository->getById(UserId::fromString($userEloquentModel->id));
 
         $laravelTokenManager = new LaravelTokenManager();
 

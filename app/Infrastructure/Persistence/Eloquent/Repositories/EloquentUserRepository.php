@@ -33,7 +33,7 @@ class EloquentUserRepository implements UserRepository
             ]
         );
 
-        $this->setPrivateProperty($reflection, $user, 'id', new UserId($userModel->id));
+        $this->setPrivateProperty($reflection, $user, 'id', UserId::fromString($userModel->id));
     }
 
     private function getPrivateProperty(ReflectionClass $ref, object $object, string $propertyName): mixed
@@ -61,7 +61,7 @@ class EloquentUserRepository implements UserRepository
         }
 
         return new User(
-            id: new UserId($userEloquentModel->id),
+            id: UserId::fromString($userEloquentModel->id),
             name: $userEloquentModel->name,
             email: $userEloquentModel->email,
             password: $userEloquentModel->password,

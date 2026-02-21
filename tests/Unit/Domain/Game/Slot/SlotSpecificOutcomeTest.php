@@ -35,9 +35,9 @@ class SlotSpecificOutcomeTest extends TestCase
         ]);
 
         $slotSpecificOutcome = new SlotSpecificOutcome(
-            multiplier: new BetMultiplier(0),
+            multiplier: BetMultiplier::fromInt(0),
             grid:$grid,
-            winningPaylines: new WinningPaylines([], new BetMultiplier(0))
+            winningPaylines: new WinningPaylines([], BetMultiplier::fromInt(0))
         );
 
         $this->assertEquals([

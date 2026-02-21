@@ -9,11 +9,19 @@ final readonly class GridInt
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(private int $value)
+    private function __construct(private int $value)
     {
         if ($this->value < 2) {
             throw new InvalidArgumentException('Invalid GridInt value');
         }
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function fromInt(int $value): self
+    {
+        return new self($value);
     }
 
     public function getValue(): int

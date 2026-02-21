@@ -12,11 +12,19 @@ final readonly class DiceNumber
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(private int $value)
+    private function __construct(private int $value)
     {
         if ($this->value < self::MIN || $this->value > self::MAX) {
             throw new InvalidArgumentException('Chosen Number must be between 1 and 6');
         }
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function fromInt(int $value): self
+    {
+        return new self($value);
     }
 
     public function gt(self $other): bool

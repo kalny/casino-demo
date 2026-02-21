@@ -33,14 +33,14 @@ class EloquentGameOutcomeRepositoryTest extends TestCase
         $eloquentGameOutcomeRepository = new EloquentGameOutcomeRepository();
 
         $eloquentGameOutcomeRepository->save(new GameOutcome(
-            gameId: new GameId($gameEloquentModel->id),
-            userId: new UserId($userEloquentModel->id),
-            betAmount: new BetAmount(100),
-            winAmount: new WinAmount(200),
+            gameId: GameId::fromString($gameEloquentModel->id),
+            userId: UserId::fromString($userEloquentModel->id),
+            betAmount: BetAmount::fromInt(100),
+            winAmount: WinAmount::fromInt(200),
             outcomeStatus: OutcomeStatus::Win,
             gameSpecificOutcome: new DiceSpecificOutcome(
-                multiplier: new BetMultiplier(2),
-                roll: new DiceNumber(5)
+                multiplier: BetMultiplier::fromInt(2),
+                roll: DiceNumber::fromInt(5)
             )
         ));
 

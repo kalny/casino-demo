@@ -9,7 +9,7 @@ class GameIdTest extends TestCase
 {
     public function testCreateValidGameIdFromInteger(): void
     {
-        $gameId = new GameId('id');
+        $gameId = GameId::fromString('id');
 
         $this->assertSame('id', $gameId->getValue());
     }

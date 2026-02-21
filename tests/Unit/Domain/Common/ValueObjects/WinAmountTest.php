@@ -13,7 +13,7 @@ class WinAmountTest extends TestCase
      */
     public function testCreateValidWinAmountFromInteger(): void
     {
-        $winAmount = new WinAmount(100);
+        $winAmount = WinAmount::fromInt(100);
 
         $this->assertSame(100, $winAmount->getValue());
     }
@@ -32,6 +32,6 @@ class WinAmountTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new WinAmount(-1);
+        WinAmount::fromInt(-1);
     }
 }

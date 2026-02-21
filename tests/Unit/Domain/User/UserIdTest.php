@@ -9,15 +9,15 @@ class UserIdTest extends TestCase
 {
     public function testCreatesValidUserIdFromInteger(): void
     {
-        $userId = new UserId('id');
+        $userId = UserId::fromString('id');
 
         $this->assertSame('id', $userId->getValue());
     }
 
     public function testEqualsComparesValuesCorrectly(): void
     {
-        $userId = new UserId('id');
-        $otherUserId = new UserId('id');
+        $userId = UserId::fromString('id');
+        $otherUserId = UserId::fromString('id');
 
         $this->assertTrue($userId->equals($otherUserId));
     }

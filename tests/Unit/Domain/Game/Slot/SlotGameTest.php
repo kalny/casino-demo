@@ -41,7 +41,7 @@ class SlotGameTest extends TestCase
             ]
         ]);
 
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -49,7 +49,7 @@ class SlotGameTest extends TestCase
             ['name' => 'E', 'multiplier' => 9],
         ]);
 
-        $paylines = new Paylines([
+        $paylines = Paylines::fromArray([
             [[0, 1], [1, 1], [2, 1]],
             [[0, 0], [1, 1], [2, 2]],
         ]);
@@ -60,17 +60,17 @@ class SlotGameTest extends TestCase
         );
 
         $slotGame = new SlotGame(
-            gameId: new GameId(1),
+            gameId: GameId::fromString(1),
             name: 'Slot Game',
-            reelsNumber: new GridInt(3),
-            symbolsNumber: new GridInt(3),
+            reelsNumber: GridInt::fromInt(3),
+            symbolsNumber: GridInt::fromInt(3),
             reelStrip: $reelStrip,
             paylines: $paylines
         );
 
         $playSlotInput = new PlaySlotInput(
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100)
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100)
         );
 
         $randomDiceNumberGenerator = $this->createMock(RandomGridGenerator::class);
@@ -78,8 +78,8 @@ class SlotGameTest extends TestCase
             ->expects($this->once())
             ->method('nextGrid')
             ->with(
-                new GridInt(3),
-                new GridInt(3),
+                GridInt::fromInt(3),
+                GridInt::fromInt(3),
                 $reelStrip
             )
             ->willReturn($resultGrid);
@@ -113,7 +113,7 @@ class SlotGameTest extends TestCase
             ]
         ]);
 
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -121,7 +121,7 @@ class SlotGameTest extends TestCase
             ['name' => 'E', 'multiplier' => 9],
         ]);
 
-        $paylines = new Paylines([
+        $paylines = Paylines::fromArray([
             [[0, 2], [1, 1], [2, 0]],
         ]);
 
@@ -131,17 +131,17 @@ class SlotGameTest extends TestCase
         );
 
         $slotGame = new SlotGame(
-            gameId: new GameId(1),
+            gameId: GameId::fromString(1),
             name: 'Slot Game',
-            reelsNumber: new GridInt(3),
-            symbolsNumber: new GridInt(3),
+            reelsNumber: GridInt::fromInt(3),
+            symbolsNumber: GridInt::fromInt(3),
             reelStrip: $reelStrip,
             paylines: $paylines
         );
 
         $playSlotInput = new PlaySlotInput(
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100)
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100)
         );
 
         $randomDiceNumberGenerator = $this->createMock(RandomGridGenerator::class);
@@ -149,8 +149,8 @@ class SlotGameTest extends TestCase
             ->expects($this->once())
             ->method('nextGrid')
             ->with(
-                new GridInt(3),
-                new GridInt(3),
+                GridInt::fromInt(3),
+                GridInt::fromInt(3),
                 $reelStrip
             )
             ->willReturn($resultGrid);

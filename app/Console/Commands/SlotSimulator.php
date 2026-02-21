@@ -43,12 +43,12 @@ class SlotSimulator extends Command
     public function handle(): void
     {
         $gameId = $this->ask('Enter Slot Game ID');
-        $slotGame = $this->gameRepository->getSlotGameById(new GameId($gameId));
+        $slotGame = $this->gameRepository->getSlotGameById(GameId::fromString($gameId));
 
         $betAmount = $this->ask('Enter bet amount');
 
         $playInput = new PlaySlotInput(
-            userId: new UserId($this->idGenerator->generate()), // fake
+            userId: UserId::fromString($this->idGenerator->generate()), // fake
             betAmount: new BetAmount($betAmount)
         );
 

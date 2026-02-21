@@ -22,15 +22,15 @@ class DiceGameTest extends TestCase
     public function testPlayDiceWinOver(): void
     {
         $diceGame = new DiceGame(
-            gameId: new GameId(1),
+            gameId: GameId::fromString(1),
             name: 'Dice Game',
-            multiplier: new BetMultiplier(2),
+            multiplier: BetMultiplier::fromInt(2),
         );
 
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100),
-            chosenNumber: new DiceNumber(4),
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100),
+            chosenNumber: DiceNumber::fromInt(4),
             playDiceType: PlayDiceType::Over,
         );
 
@@ -38,7 +38,7 @@ class DiceGameTest extends TestCase
         $randomDiceNumberGenerator
             ->expects($this->once())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(5));
+            ->willReturn(DiceNumber::fromInt(5));
 
         $gameOutcome = $diceGame->playDice($playDiceInput, $randomDiceNumberGenerator);
 
@@ -52,15 +52,15 @@ class DiceGameTest extends TestCase
     public function testPlayDiceWinUnder(): void
     {
         $diceGame = new DiceGame(
-            gameId: new GameId(1),
+            gameId: GameId::fromString(1),
             name: 'Dice Game',
-            multiplier: new BetMultiplier(2),
+            multiplier: BetMultiplier::fromInt(2),
         );
 
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100),
-            chosenNumber: new DiceNumber(4),
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100),
+            chosenNumber: DiceNumber::fromInt(4),
             playDiceType: PlayDiceType::Under,
         );
 
@@ -68,7 +68,7 @@ class DiceGameTest extends TestCase
         $randomDiceNumberGenerator
             ->expects($this->once())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(3));
+            ->willReturn(DiceNumber::fromInt(3));
 
         $gameOutcome = $diceGame->playDice($playDiceInput, $randomDiceNumberGenerator);
 
@@ -81,15 +81,15 @@ class DiceGameTest extends TestCase
     public function testPlayDiceLossOver(): void
     {
         $diceGame = new DiceGame(
-            gameId: new GameId(1),
+            gameId: GameId::fromString(1),
             name: 'Dice Game',
-            multiplier: new BetMultiplier(2),
+            multiplier: BetMultiplier::fromInt(2),
         );
 
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100),
-            chosenNumber: new DiceNumber(4),
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100),
+            chosenNumber: DiceNumber::fromInt(4),
             playDiceType: PlayDiceType::Over,
         );
 
@@ -97,7 +97,7 @@ class DiceGameTest extends TestCase
         $randomDiceNumberGenerator
             ->expects($this->once())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(2));
+            ->willReturn(DiceNumber::fromInt(2));
 
         $gameOutcome = $diceGame->playDice($playDiceInput, $randomDiceNumberGenerator);
 
@@ -110,15 +110,15 @@ class DiceGameTest extends TestCase
     public function testPlayDicLossUnder(): void
     {
         $diceGame = new DiceGame(
-            gameId: new GameId(1),
+            gameId: GameId::fromString(1),
             name: 'Dice Game',
-            multiplier: new BetMultiplier(2),
+            multiplier: BetMultiplier::fromInt(2),
         );
 
         $playDiceInput = new PlayDiceInput(
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100),
-            chosenNumber: new DiceNumber(4),
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100),
+            chosenNumber: DiceNumber::fromInt(4),
             playDiceType: PlayDiceType::Under,
         );
 
@@ -126,7 +126,7 @@ class DiceGameTest extends TestCase
         $randomDiceNumberGenerator
             ->expects($this->once())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(6));
+            ->willReturn(DiceNumber::fromInt(6));
 
         $gameOutcome = $diceGame->playDice($playDiceInput, $randomDiceNumberGenerator);
 

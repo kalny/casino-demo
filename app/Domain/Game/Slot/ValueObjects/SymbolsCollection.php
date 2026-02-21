@@ -13,7 +13,7 @@ final readonly class SymbolsCollection
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(array $symbolsArray)
+    private function __construct(array $symbolsArray)
     {
         $symbols = [];
 
@@ -32,12 +32,20 @@ final readonly class SymbolsCollection
             }
 
             $symbols[] = new Symbol(
-                name: new SymbolName($symbol['name']),
-                multiplier: new BetMultiplier($symbol['multiplier'])
+                name: SymbolName::fromString($symbol['name']),
+                multiplier: BetMultiplier::fromInt($symbol['multiplier'])
             );
         }
 
         $this->symbols = $symbols;
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function fromArray(array $symbolsArray): self
+    {
+        return new self($symbolsArray);
     }
 
     public function getData(): array
@@ -71,7 +79,7 @@ final readonly class SymbolsCollection
      */
     public function getMaxMultiplier(): BetMultiplier
     {
-        $maxMultiplier = new BetMultiplier(0);
+        $maxMultiplier = BetMultiplier::fromInt(0);
 
         foreach ($this->symbols as $symbol) {
             if ($symbol->multiplier->gt($maxMultiplier)) {

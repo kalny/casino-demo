@@ -32,10 +32,10 @@ class PlaySlotGameHandler
      */
     public function handle(PlaySlotGameCommand $command): GameOutcome
     {
-        $slotGame = $this->gameRepository->getSlotGameById(new GameId($command->gameId));
-        $user = $this->userRepository->getById(new UserId($command->userId));
+        $slotGame = $this->gameRepository->getSlotGameById(GameId::fromString($command->gameId));
+        $user = $this->userRepository->getById(UserId::fromString($command->userId));
 
-        $betAmount = new BetAmount($command->betAmount);
+        $betAmount = BetAmount::fromInt($command->betAmount);
 
         $user->debit($betAmount);
 

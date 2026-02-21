@@ -59,7 +59,7 @@ class GridTest extends TestCase
             ]
         ]);
 
-        $paylines = new Paylines([
+        $paylines = Paylines::fromArray([
             [[0, 0], [1, 1], [2, 2]],
         ]);
 
@@ -91,7 +91,7 @@ class GridTest extends TestCase
             ]
         ]);
 
-        $paylines = new Paylines($paylinesArray);
+        $paylines = Paylines::fromArray($paylinesArray);
 
         $winningPaylines = $grid->getWinningPaylines($paylines);
         $this->assertSame($winningPaylinesCount, count($winningPaylines->getData()));

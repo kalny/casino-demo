@@ -50,7 +50,7 @@ class LoginUserHandlerTest extends TestCase
         $user
             ->expects($this->once())
             ->method('getId')
-            ->willReturn(new UserId('id'));
+            ->willReturn(UserId::fromString('id'));
 
         $this->tokenManager
             ->expects($this->once())

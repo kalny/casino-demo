@@ -22,14 +22,14 @@ class GameOutcomeTest extends TestCase
     public function testCreateTestOutcomeWithWinStatus(): void
     {
         $testOutcome = new GameOutcome(
-            gameId: new GameId(1),
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100),
-            winAmount: new WinAmount(200),
+            gameId: GameId::fromString(1),
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100),
+            winAmount: WinAmount::fromInt(200),
             outcomeStatus: OutcomeStatus::Win,
             gameSpecificOutcome: new DiceSpecificOutcome(
-                multiplier: new BetMultiplier(2),
-                roll: new DiceNumber(3)
+                multiplier: BetMultiplier::fromInt(2),
+                roll: DiceNumber::fromInt(3)
             )
         );
 
@@ -42,14 +42,14 @@ class GameOutcomeTest extends TestCase
     public function testCreateTestOutcomeWithLossStatus(): void
     {
         $testOutcome = new GameOutcome(
-            gameId: new GameId(1),
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100),
+            gameId: GameId::fromString(1),
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100),
             winAmount: WinAmount::zero(),
             outcomeStatus: OutcomeStatus::Loss,
             gameSpecificOutcome: new DiceSpecificOutcome(
-                multiplier: new BetMultiplier(0),
-                roll: new DiceNumber(3)
+                multiplier: BetMultiplier::fromInt(0),
+                roll: DiceNumber::fromInt(3)
             )
         );
 

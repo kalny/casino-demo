@@ -16,7 +16,7 @@ class SymbolsCollectionTest extends TestCase
      */
     public function testCreateValidSymbolsCollectionFromArrayOfStrings(): void
     {
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -33,10 +33,10 @@ class SymbolsCollectionTest extends TestCase
      */
     public function testCreateValidSymbolsCollectionFromArrayOfObject(): void
     {
-        $symbolsCollection = new SymbolsCollection([
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
-            new Symbol(new SymbolName('B'), new BetMultiplier(6)),
-            new Symbol(new SymbolName('C'), new BetMultiplier(7)),
+        $symbolsCollection = SymbolsCollection::fromArray([
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
+            new Symbol(SymbolName::fromString('B'), BetMultiplier::fromInt(6)),
+            new Symbol(SymbolName::fromString('C'), BetMultiplier::fromInt(7)),
         ]);
 
         $this->assertSame(3, count($symbolsCollection->getData()));
@@ -50,9 +50,9 @@ class SymbolsCollectionTest extends TestCase
      */
     public function testCreateValidSymbolsCollectionFromMixedArray(): void
     {
-        $symbolsCollection = new SymbolsCollection([
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
-            new Symbol(new SymbolName('B'), new BetMultiplier(6)),
+        $symbolsCollection = SymbolsCollection::fromArray([
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
+            new Symbol(SymbolName::fromString('B'), BetMultiplier::fromInt(6)),
             ['name' => 'C', 'multiplier' => 7],
             ['name' => 'D', 'multiplier' => 8],
         ]);
@@ -68,7 +68,7 @@ class SymbolsCollectionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new SymbolsCollection([
+        SymbolsCollection::fromArray([
             ['multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -79,7 +79,7 @@ class SymbolsCollectionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new SymbolsCollection([
+        SymbolsCollection::fromArray([
             ['name' => 'A'],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -91,9 +91,9 @@ class SymbolsCollectionTest extends TestCase
      */
     public function testGetSymbol(): void
     {
-        $symbolsCollection = new SymbolsCollection([
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
-            new Symbol(new SymbolName('B'), new BetMultiplier(6)),
+        $symbolsCollection = SymbolsCollection::fromArray([
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
+            new Symbol(SymbolName::fromString('B'), BetMultiplier::fromInt(6)),
             ['name' => 'C', 'multiplier' => 7],
             ['name' => 'D', 'multiplier' => 8],
         ]);
@@ -110,9 +110,9 @@ class SymbolsCollectionTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $symbolsCollection = new SymbolsCollection([
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
-            new Symbol(new SymbolName('B'), new BetMultiplier(6)),
+        $symbolsCollection = SymbolsCollection::fromArray([
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
+            new Symbol(SymbolName::fromString('B'), BetMultiplier::fromInt(6)),
             ['name' => 'C', 'multiplier' => 7],
             ['name' => 'D', 'multiplier' => 8],
         ]);
@@ -125,10 +125,10 @@ class SymbolsCollectionTest extends TestCase
      */
     public function testIsWinningTrue(): void
     {
-        $symbolsCollection = new SymbolsCollection([
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
+        $symbolsCollection = SymbolsCollection::fromArray([
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
         ]);
 
         $this->assertTrue($symbolsCollection->isWinning());
@@ -139,10 +139,10 @@ class SymbolsCollectionTest extends TestCase
      */
     public function testIsWinningFalse(): void
     {
-        $symbolsCollection = new SymbolsCollection([
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
-            new Symbol(new SymbolName('B'), new BetMultiplier(6)),
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
+        $symbolsCollection = SymbolsCollection::fromArray([
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
+            new Symbol(SymbolName::fromString('B'), BetMultiplier::fromInt(6)),
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
         ]);
 
         $this->assertFalse($symbolsCollection->isWinning());
@@ -153,10 +153,10 @@ class SymbolsCollectionTest extends TestCase
      */
     public function testGetMaxMultiplier(): void
     {
-        $symbolsCollection = new SymbolsCollection([
-            new Symbol(new SymbolName('A'), new BetMultiplier(5)),
-            new Symbol(new SymbolName('B'), new BetMultiplier(6)),
-            new Symbol(new SymbolName('C'), new BetMultiplier(7)),
+        $symbolsCollection = SymbolsCollection::fromArray([
+            new Symbol(SymbolName::fromString('A'), BetMultiplier::fromInt(5)),
+            new Symbol(SymbolName::fromString('B'), BetMultiplier::fromInt(6)),
+            new Symbol(SymbolName::fromString('C'), BetMultiplier::fromInt(7)),
         ]);
 
         $maxMultiplier = $symbolsCollection->getMaxMultiplier();

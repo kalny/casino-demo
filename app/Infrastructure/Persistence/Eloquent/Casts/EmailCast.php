@@ -14,7 +14,7 @@ class EmailCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes)
     {
-        return new Email($value);
+        return Email::fromString($value);
     }
 
     /**

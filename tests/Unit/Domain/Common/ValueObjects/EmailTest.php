@@ -10,21 +10,21 @@ class EmailTest extends TestCase
 {
     public function testCreatesValidEmailFromString(): void
     {
-        $email = new Email('test@example.com');
+        $email = Email::fromString('test@example.com');
 
         $this->assertSame('test@example.com', $email->getValue());
     }
 
     public function testNormalizeEmailToLowerCase(): void
     {
-        $email = new Email('Test@Example.com');
+        $email = Email::fromString('Test@Example.com');
 
         $this->assertSame('test@example.com', $email->getValue());
     }
 
     public function testTrimEmailWhiteSpaces(): void
     {
-        $email = new Email('  test@example.com  ');
+        $email = Email::fromString('  test@example.com  ');
 
         $this->assertSame('test@example.com', $email->getValue());
     }
@@ -33,13 +33,13 @@ class EmailTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new Email('incorrect');
+        Email::fromString('incorrect');
     }
 
     public function testCreateEmailFromEmptyString(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new Email(' ');
+        Email::fromString(' ');
     }
 }

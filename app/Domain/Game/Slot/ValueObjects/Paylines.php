@@ -10,7 +10,7 @@ final readonly class Paylines
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(private array $paylines)
+    private function __construct(private array $paylines)
     {
         if (empty($this->paylines)) {
             throw new InvalidArgumentException('Paylines cannot be empty');
@@ -18,6 +18,14 @@ final readonly class Paylines
 
         $paylinesFormatChecker = new PaylinesFormatChecker();
         $paylinesFormatChecker->check($this->paylines);
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function fromArray(array $paylines): self
+    {
+        return new self($paylines);
     }
 
     public function getData(): array

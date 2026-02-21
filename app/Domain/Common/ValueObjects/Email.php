@@ -11,19 +11,25 @@ final readonly class Email
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(string $value)
+    private function __construct(string $value)
     {
-        $normalizedEmailString = mb_strtolower(trim($value));
-
-        if (!filter_var($normalizedEmailString, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidArgumentException("Incorrect email format: {$normalizedEmailString}");
+        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidArgumentException("Incorrect email format: {$value}");
         }
 
-        if (empty($normalizedEmailString)) {
+        if (empty($value)) {
             throw new InvalidArgumentException('Email cannot be empty');
         }
 
-        $this->value = $normalizedEmailString;
+        $this->value = $value;
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function fromString(string $value): self
+    {
+        return new self(mb_strtolower(trim($value)));
     }
 
     public function getValue(): string

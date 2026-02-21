@@ -32,7 +32,7 @@ class UserFactory extends Factory
         return [
             'id' => Str::uuid()->toString(),
             'name' => fake()->name(),
-            'email' => new Email(fake()->unique()->safeEmail()),
+            'email' => Email::fromString(fake()->unique()->safeEmail()),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

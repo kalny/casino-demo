@@ -10,21 +10,21 @@ class SymbolNameTest extends TestCase
 {
     public function testCreateValidSymbolNameFromString(): void
     {
-        $symbolName = new SymbolName('A');
+        $symbolName = SymbolName::fromString('A');
 
         $this->assertSame('A', $symbolName->getValue());
     }
 
     public function testEqualsCompareSymbolNameWithStringTrue(): void
     {
-        $symbolName = new SymbolName('A');
+        $symbolName = SymbolName::fromString('A');
 
         $this->assertTrue($symbolName->equals('A'));
     }
 
     public function testEqualsCompareSymbolNameWithStringFalse(): void
     {
-        $symbolName = new SymbolName('A');
+        $symbolName = SymbolName::fromString('A');
 
         $this->assertFalse($symbolName->equals('B'));
     }
@@ -33,6 +33,6 @@ class SymbolNameTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new SymbolName('');
+        SymbolName::fromString('');
     }
 }

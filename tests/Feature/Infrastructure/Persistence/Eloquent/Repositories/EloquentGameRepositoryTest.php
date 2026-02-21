@@ -31,7 +31,7 @@ class EloquentGameRepositoryTest extends TestCase
             'type' => GameType::Slot->value
         ]);
 
-        $type = $this->repository->getTypeById(new GameId($gameEloquentModel->id));
+        $type = $this->repository->getTypeById(GameId::fromString($gameEloquentModel->id));
 
         $this->assertSame(GameType::Slot->value, $type->value);
     }
@@ -40,7 +40,7 @@ class EloquentGameRepositoryTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $this->repository->getTypeById(new GameId('id'));
+        $this->repository->getTypeById(GameId::fromString('id'));
     }
 
     /**
@@ -56,7 +56,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $game = $this->repository->getDiceGameById(new GameId($diceGame->id));
+        $game = $this->repository->getDiceGameById(GameId::fromString($diceGame->id));
 
         $this->assertSame($diceGame->id, $game->getId()->getValue());
     }
@@ -69,7 +69,7 @@ class EloquentGameRepositoryTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $this->repository->getDiceGameById(new GameId('id'));
+        $this->repository->getDiceGameById(GameId::fromString('id'));
     }
 
     /**
@@ -87,7 +87,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getDiceGameById(new GameId($slotGame->id));
+        $this->repository->getDiceGameById(GameId::fromString($slotGame->id));
     }
 
     /**
@@ -102,7 +102,7 @@ class EloquentGameRepositoryTest extends TestCase
             'config' => []
         ]);
 
-        $this->repository->getDiceGameById(new GameId($diceGame->id));
+        $this->repository->getDiceGameById(GameId::fromString($diceGame->id));
     }
 
     /**
@@ -126,7 +126,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $game = $this->repository->getSlotGameById(new GameId($slotGame->id));
+        $game = $this->repository->getSlotGameById(GameId::fromString($slotGame->id));
 
         $this->assertSame($slotGame->id, $game->getId()->getValue());
     }
@@ -139,7 +139,7 @@ class EloquentGameRepositoryTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $this->repository->getSlotGameById(new GameId('id'));
+        $this->repository->getSlotGameById(GameId::fromString('id'));
     }
 
     /**
@@ -157,7 +157,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById(new GameId($diceGame->id));
+        $this->repository->getSlotGameById(GameId::fromString($diceGame->id));
     }
 
     /**
@@ -181,7 +181,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById(new GameId($slotGame->id));
+        $this->repository->getSlotGameById(GameId::fromString($slotGame->id));
     }
 
     /**
@@ -205,7 +205,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById(new GameId($slotGame->id));
+        $this->repository->getSlotGameById(GameId::fromString($slotGame->id));
     }
 
     /**
@@ -229,7 +229,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById(new GameId($slotGame->id));
+        $this->repository->getSlotGameById(GameId::fromString($slotGame->id));
     }
 
     /**
@@ -249,7 +249,7 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById(new GameId($slotGame->id));
+        $this->repository->getSlotGameById(GameId::fromString($slotGame->id));
     }
 
     /**
@@ -273,6 +273,6 @@ class EloquentGameRepositoryTest extends TestCase
             ]
         ]);
 
-        $this->repository->getSlotGameById(new GameId($slotGame->id));
+        $this->repository->getSlotGameById(GameId::fromString($slotGame->id));
     }
 }

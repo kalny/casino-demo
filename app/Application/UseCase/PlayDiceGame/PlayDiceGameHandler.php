@@ -34,17 +34,17 @@ class PlayDiceGameHandler
      */
     public function handle(PlayDiceGameCommand $command): GameOutcome
     {
-        $diceGame = $this->gameRepository->getDiceGameById(new GameId($command->gameId));
-        $user = $this->userRepository->getById(new UserId($command->userId));
+        $diceGame = $this->gameRepository->getDiceGameById(GameId::fromString($command->gameId));
+        $user = $this->userRepository->getById(UserId::fromString($command->userId));
 
-        $betAmount = new BetAmount($command->betAmount);
+        $betAmount = BetAmount::fromInt($command->betAmount);
 
         $user->debit($betAmount);
 
         $playInput = new PlayDiceInput(
             userId: $user->getId(),
             betAmount: $betAmount,
-            chosenNumber: new DiceNumber($command->chosenNumber),
+            chosenNumber: DiceNumber::fromInt($command->chosenNumber),
             playDiceType: PlayDiceType::from($command->playDiceType)
         );
 

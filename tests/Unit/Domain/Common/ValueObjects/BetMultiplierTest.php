@@ -13,7 +13,7 @@ class BetMultiplierTest extends TestCase
      */
     public function testCreateValidBetMultiplierFromInteger(): void
     {
-        $betMultiplier = new BetMultiplier(5);
+        $betMultiplier = BetMultiplier::fromInt(5);
 
         $this->assertSame(5, $betMultiplier->getValue());
     }
@@ -23,8 +23,8 @@ class BetMultiplierTest extends TestCase
      */
     public function testCompareBetMultiplierWithLesser(): void
     {
-        $betMultiplier = new BetMultiplier(5);
-        $otherBetMultiplier = new BetMultiplier(4);
+        $betMultiplier = BetMultiplier::fromInt(5);
+        $otherBetMultiplier = BetMultiplier::fromInt(4);
 
         $this->assertTrue($betMultiplier->gt($otherBetMultiplier));
     }
@@ -34,8 +34,8 @@ class BetMultiplierTest extends TestCase
      */
     public function testCompareBetMultiplierWithGreater(): void
     {
-        $betMultiplier = new BetMultiplier(5);
-        $otherBetMultiplier = new BetMultiplier(6);
+        $betMultiplier = BetMultiplier::fromInt(5);
+        $otherBetMultiplier = BetMultiplier::fromInt(6);
 
         $this->assertFalse($betMultiplier->gt($otherBetMultiplier));
     }
@@ -45,8 +45,8 @@ class BetMultiplierTest extends TestCase
      */
     public function testAddValueFromOtherMultiplier(): void
     {
-        $betMultiplier = new BetMultiplier(5);
-        $otherBetMultiplier = new BetMultiplier(5);
+        $betMultiplier = BetMultiplier::fromInt(5);
+        $otherBetMultiplier = BetMultiplier::fromInt(5);
 
         $this->assertSame(10, $betMultiplier->add($otherBetMultiplier)->getValue());
         $this->assertNotSame($betMultiplier, $betMultiplier->add($otherBetMultiplier));
@@ -56,6 +56,6 @@ class BetMultiplierTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new BetMultiplier(-1);
+        BetMultiplier::fromInt(-1);
     }
 }

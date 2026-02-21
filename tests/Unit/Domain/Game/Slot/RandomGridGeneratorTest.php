@@ -17,7 +17,7 @@ class RandomGridGeneratorTest extends TestCase
      */
     public function testNextNumber(): void
     {
-        $symbolsCollection = new SymbolsCollection([
+        $symbolsCollection = SymbolsCollection::fromArray([
             ['name' => 'A', 'multiplier' => 5],
             ['name' => 'B', 'multiplier' => 6],
             ['name' => 'C', 'multiplier' => 7],
@@ -37,8 +37,8 @@ class RandomGridGeneratorTest extends TestCase
 
         $randomGridGenerator = new RandomGridGenerator($rng);
         $grid = $randomGridGenerator->nextGrid(
-            new GridInt(3),
-            new GridInt(3),
+            GridInt::fromInt(3),
+            GridInt::fromInt(3),
             $reelStrip
         );
 

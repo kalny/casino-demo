@@ -37,9 +37,9 @@ class PlayDiceGameHandlerTest extends TestCase
         parent::setUp();
 
         $this->user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name: 'Test User',
-            email: new Email('test@example.com'),
+            email: Email::fromString('test@example.com'),
             password: 'test',
             balance: 1000
         );
@@ -76,15 +76,15 @@ class PlayDiceGameHandlerTest extends TestCase
             ->expects($this->any())
             ->method('getDiceGameById')
             ->willReturn(new DiceGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Dice Game',
-                multiplier: new BetMultiplier(3)
+                multiplier: BetMultiplier::fromInt(3)
             ));
 
         $this->randomDiceNumberGenerator
             ->expects($this->any())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(5));
+            ->willReturn(DiceNumber::fromInt(5));
 
         $handler = new PlayDiceGameHandler(
             gameRepository: $this->gameRepository,
@@ -121,15 +121,15 @@ class PlayDiceGameHandlerTest extends TestCase
             ->expects($this->any())
             ->method('getDiceGameById')
             ->willReturn(new DiceGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Dice Game',
-                multiplier: new BetMultiplier(3)
+                multiplier: BetMultiplier::fromInt(3)
             ));
 
         $this->randomDiceNumberGenerator
             ->expects($this->any())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(5));
+            ->willReturn(DiceNumber::fromInt(5));
 
         $handler = new PlayDiceGameHandler(
             gameRepository: $this->gameRepository,
@@ -166,15 +166,15 @@ class PlayDiceGameHandlerTest extends TestCase
             ->expects($this->any())
             ->method('getDiceGameById')
             ->willReturn(new DiceGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Dice Game',
-                multiplier: new BetMultiplier(3)
+                multiplier: BetMultiplier::fromInt(3)
             ));
 
         $this->randomDiceNumberGenerator
             ->expects($this->any())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(3));
+            ->willReturn(DiceNumber::fromInt(3));
 
         $handler = new PlayDiceGameHandler(
             gameRepository: $this->gameRepository,
@@ -211,15 +211,15 @@ class PlayDiceGameHandlerTest extends TestCase
             ->expects($this->any())
             ->method('getDiceGameById')
             ->willReturn(new DiceGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Dice Game',
-                multiplier: new BetMultiplier(3)
+                multiplier: BetMultiplier::fromInt(3)
             ));
 
         $this->randomDiceNumberGenerator
             ->expects($this->any())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(6));
+            ->willReturn(DiceNumber::fromInt(6));
 
         $handler = new PlayDiceGameHandler(
             gameRepository: $this->gameRepository,
@@ -253,21 +253,21 @@ class PlayDiceGameHandlerTest extends TestCase
     {
         $this->expectException(InsufficientFundsException::class);
 
-        $this->user->debit(new BetAmount(1000));
+        $this->user->debit(BetAmount::fromInt(1000));
 
         $this->gameRepository
             ->expects($this->any())
             ->method('getDiceGameById')
             ->willReturn(new DiceGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Dice Game',
-                multiplier: new BetMultiplier(3)
+                multiplier: BetMultiplier::fromInt(3)
             ));
 
         $this->randomDiceNumberGenerator
             ->expects($this->any())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(6));
+            ->willReturn(DiceNumber::fromInt(6));
 
         $handler = new PlayDiceGameHandler(
             gameRepository: $this->gameRepository,
@@ -298,15 +298,15 @@ class PlayDiceGameHandlerTest extends TestCase
             ->expects($this->any())
             ->method('getDiceGameById')
             ->willReturn(new DiceGame(
-                gameId: new GameId('id'),
+                gameId: GameId::fromString('id'),
                 name: 'Dice Game',
-                multiplier: new BetMultiplier(3)
+                multiplier: BetMultiplier::fromInt(3)
             ));
 
         $this->randomDiceNumberGenerator
             ->expects($this->any())
             ->method('nextNumber')
-            ->willReturn(new DiceNumber(6));
+            ->willReturn(DiceNumber::fromInt(6));
 
         $handler = new PlayDiceGameHandler(
             gameRepository: $this->gameRepository,

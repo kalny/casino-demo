@@ -43,9 +43,9 @@ class EloquentUserRepositoryTest extends TestCase
     public function testSave(): void
     {
         $user = new User(
-            id: new UserId('id'),
+            id: UserId::fromString('id'),
             name:'Test User',
-            email: new Email('testuser@example.com'),
+            email: Email::fromString('testuser@example.com'),
             password: 'password',
             balance: 0
         );
@@ -62,7 +62,7 @@ class EloquentUserRepositoryTest extends TestCase
     public function testFindByEmail(): void
     {
         $userEloquentModel = UserEloquentModel::factory()->create([
-            'email' => new Email('testuser@example.com')
+            'email' => Email::fromString('testuser@example.com')
         ]);
 
         $user = $this->repository->findByEmail($userEloquentModel->email->getValue());
@@ -81,7 +81,7 @@ class EloquentUserRepositoryTest extends TestCase
     {
         $userEloquentModel = UserEloquentModel::factory()->create();
 
-        $user = $this->repository->getById(new UserId($userEloquentModel->id));
+        $user = $this->repository->getById(UserId::fromString($userEloquentModel->id));
 
         $this->assertSame($userEloquentModel->id, $user->getId()->getValue());
     }
@@ -90,6 +90,6 @@ class EloquentUserRepositoryTest extends TestCase
     {
         $this->expectException(ModelNotFoundException::class);
 
-        $this->repository->getById(new UserId('id'));
+        $this->repository->getById(UserId::fromString('id'));
     }
 }

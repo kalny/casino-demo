@@ -14,7 +14,7 @@ class BetAmountTest extends TestCase
      */
     public function testCreateValidBetAmountFromInteger(): void
     {
-        $betAmount = new BetAmount(100);
+        $betAmount = BetAmount::fromInt(100);
 
         $this->assertSame(100, $betAmount->getValue());
     }
@@ -24,8 +24,8 @@ class BetAmountTest extends TestCase
      */
     public function testMultiplyBetAmount(): void
     {
-        $betMultiplier = new BetMultiplier(5);
-        $betAmount = new BetAmount(100);
+        $betMultiplier = BetMultiplier::fromInt(5);
+        $betAmount = BetAmount::fromInt(100);
 
         $winAmount = $betAmount->multiply($betMultiplier);
         $this->assertSame(500, $winAmount->getValue());
@@ -35,13 +35,13 @@ class BetAmountTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new BetAmount(0);
+        BetAmount::fromInt(0);
     }
 
     public function testCreateBetAmountWithNegativeValue(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new BetAmount(-1);
+        BetAmount::fromInt(-1);
     }
 }

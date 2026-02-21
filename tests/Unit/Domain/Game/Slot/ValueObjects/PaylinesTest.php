@@ -18,7 +18,7 @@ class PaylinesTest extends TestCase
             [[0, 1], [0, 2], [0, 3]],
         ];
 
-        $paylines = new Paylines($paylinesArray);
+        $paylines = Paylines::fromArray($paylinesArray);
 
         $this->assertSame($paylinesArray, $paylines->getData());
     }
@@ -27,7 +27,7 @@ class PaylinesTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new Paylines([]);
+        Paylines::fromArray([]);
     }
 
     #[dataProvider('invalidArraysDataProvider')]
@@ -35,7 +35,7 @@ class PaylinesTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new Paylines($array);
+        Paylines::fromArray($array);
     }
 
     public static function invalidArraysDataProvider(): array

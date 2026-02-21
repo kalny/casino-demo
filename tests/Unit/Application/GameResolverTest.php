@@ -44,27 +44,27 @@ class GameResolverTest extends TestCase
         parent::setUp();
 
         $this->diceGameOutcome = new GameOutcome(
-            gameId: new GameId(1),
-            userId: new UserId('id'),
-            betAmount: new BetAmount(100),
-            winAmount: new WinAmount(200),
+            gameId: GameId::fromString(1),
+            userId: UserId::fromString('id'),
+            betAmount: BetAmount::fromInt(100),
+            winAmount: WinAmount::fromInt(200),
             outcomeStatus: OutcomeStatus::Win,
             gameSpecificOutcome: new DiceSpecificOutcome(
-                multiplier: new BetMultiplier(2),
-                roll: new DiceNumber(4)
+                multiplier: BetMultiplier::fromInt(2),
+                roll: DiceNumber::fromInt(4)
             )
         );
 
         $this->slotGameOutcome = new GameOutcome(
-            gameId: new GameId(2),
-            userId: new UserId('id2'),
-            betAmount: new BetAmount(100),
-            winAmount: new WinAmount(500),
+            gameId: GameId::fromString(2),
+            userId: UserId::fromString('id2'),
+            betAmount: BetAmount::fromInt(100),
+            winAmount: WinAmount::fromInt(500),
             outcomeStatus: OutcomeStatus::Win,
             gameSpecificOutcome: new SlotSpecificOutcome(
-                multiplier: new BetMultiplier(2),
+                multiplier: BetMultiplier::fromInt(2),
                 grid: new Grid([]),
-                winningPaylines: new WinningPaylines([], new BetMultiplier(5))
+                winningPaylines: new WinningPaylines([], BetMultiplier::fromInt(5))
             )
         );
 

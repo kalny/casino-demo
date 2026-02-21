@@ -16,8 +16,8 @@ class DiceSpecificOutcomeTest extends TestCase
     public function testCreateDiceSpecificOutcome(): void
     {
         $diceSpecificOutcome = new DiceSpecificOutcome(
-            multiplier: new BetMultiplier(2),
-            roll: new DiceNumber(3)
+            multiplier: BetMultiplier::fromInt(2),
+            roll: DiceNumber::fromInt(3)
         );
 
         $this->assertEquals([

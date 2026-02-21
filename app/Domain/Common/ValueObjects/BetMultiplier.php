@@ -9,11 +9,19 @@ final readonly class BetMultiplier
     /**
      * @throws InvalidArgumentException
      */
-    public function __construct(private int $value)
+    private function __construct(private int $value)
     {
         if ($value < 0) {
             throw new InvalidArgumentException('the multiplier cannot be negative');
         }
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function fromInt(int $value): self
+    {
+        return new self($value);
     }
 
     public function getValue(): int
