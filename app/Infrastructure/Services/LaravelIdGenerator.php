@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Services;
 
-use App\Domain\Services\IdGenerator;
+use App\Application\Services\IdGenerator;
 use Illuminate\Support\Str;
 
 class LaravelIdGenerator implements IdGenerator

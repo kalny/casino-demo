@@ -3,14 +3,14 @@
 namespace App\Console\Commands;
 
 use App\Domain\Common\ValueObjects\BetAmount;
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Games\Dice\RandomDiceNumberGenerator;
-use App\Domain\Games\Dice\ValueObjects\DiceNumber;
-use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
-use App\Domain\Games\Dice\ValueObjects\PlayDiceType;
-use App\Domain\Games\GameId;
-use App\Domain\Games\Repository\GameRepository;
-use App\Domain\Services\IdGenerator;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\Game\Dice\RandomDiceNumberGenerator;
+use App\Domain\Game\Dice\ValueObjects\DiceNumber;
+use App\Domain\Game\Dice\ValueObjects\PlayDiceInput;
+use App\Domain\Game\Dice\ValueObjects\PlayDiceType;
+use App\Domain\Game\GameId;
+use App\Domain\Game\Repository\GameRepository;
+use App\Application\Services\IdGenerator;
 use App\Domain\User\UserId;
 use App\Infrastructure\Services\PHPSeededRandomNumberGenerator;
 use Illuminate\Console\Command;

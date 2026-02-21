@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Persistence\Eloquent\Repositories;
 
-use App\Domain\Games\Common\GameOutcome;
-use App\Domain\Games\Repository\GameOutcomeRepository;
+use App\Domain\Game\GameOutcome;
+use App\Domain\Game\Repository\GameOutcomeRepository;
 use App\Infrastructure\Persistence\Eloquent\Models\Bet as BetEloquentModel;
 use ReflectionClass;
 

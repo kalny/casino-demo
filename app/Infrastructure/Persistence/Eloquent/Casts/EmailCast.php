@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Persistence\Eloquent\Casts;
 
 use App\Domain\Common\ValueObjects\Email;
-use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 

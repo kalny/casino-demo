@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Services;
 
-use App\Domain\Services\RandomNumberGenerator;
+use App\Domain\Common\Services\RandomNumberGenerator;
 use Random\RandomException;
 
 class PHPRandomNumberGenerator implements RandomNumberGenerator

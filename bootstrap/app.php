@@ -1,11 +1,11 @@
 <?php
 
-use App\Domain\Exceptions\DomainException;
-use App\Domain\Exceptions\InsufficientFundsException;
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Exceptions\InvalidCredentialsException;
-use App\Domain\Exceptions\InvalidGameTypeException;
-use App\Domain\Exceptions\UserAlreadyExistsException;
+use App\Domain\Common\Exceptions\DomainException;
+use App\Domain\Common\Exceptions\InsufficientFundsException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\User\Exceptions\InvalidCredentialsException;
+use App\Domain\Game\Exceptions\InvalidGameTypeException;
+use App\Domain\User\Exceptions\UserAlreadyExistsException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

@@ -3,7 +3,7 @@
 namespace Tests\Unit\Application\UseCase\PlayDiceGame;
 
 use App\Application\UseCase\PlayDiceGame\PlayDiceGameCommand;
-use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
 use Tests\TestCase;
 
 class PlayDiceGameCommandTest extends TestCase

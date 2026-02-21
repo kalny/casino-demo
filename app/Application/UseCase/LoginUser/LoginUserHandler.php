@@ -3,9 +3,9 @@
 namespace App\Application\UseCase\LoginUser;
 
 use App\Application\UseCase\UserResponse;
-use App\Domain\Exceptions\InvalidCredentialsException;
-use App\Domain\Services\PasswordHasher;
-use App\Domain\Services\TokenManager;
+use App\Domain\User\Exceptions\InvalidCredentialsException;
+use App\Domain\Common\Services\PasswordHasher;
+use App\Application\Services\TokenManager;
 use App\Domain\User\Repository\UserRepository;
 
 class LoginUserHandler

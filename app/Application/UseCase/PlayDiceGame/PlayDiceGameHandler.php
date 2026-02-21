@@ -3,16 +3,16 @@
 namespace App\Application\UseCase\PlayDiceGame;
 
 use App\Application\Ports\TransactionManager;
-use App\Domain\Exceptions\InsufficientFundsException;
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Games\Common\GameOutcome;
-use App\Domain\Games\Dice\RandomDiceNumberGenerator;
-use App\Domain\Games\Dice\ValueObjects\DiceNumber;
-use App\Domain\Games\Dice\ValueObjects\PlayDiceInput;
-use App\Domain\Games\Dice\ValueObjects\PlayDiceType;
-use App\Domain\Games\GameId;
-use App\Domain\Games\Repository\GameOutcomeRepository;
-use App\Domain\Games\Repository\GameRepository;
+use App\Domain\Common\Exceptions\InsufficientFundsException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\Game\GameOutcome;
+use App\Domain\Game\Dice\RandomDiceNumberGenerator;
+use App\Domain\Game\Dice\ValueObjects\DiceNumber;
+use App\Domain\Game\Dice\ValueObjects\PlayDiceInput;
+use App\Domain\Game\Dice\ValueObjects\PlayDiceType;
+use App\Domain\Game\GameId;
+use App\Domain\Game\Repository\GameOutcomeRepository;
+use App\Domain\Game\Repository\GameRepository;
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\UserId;

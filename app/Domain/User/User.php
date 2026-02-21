@@ -3,10 +3,10 @@
 namespace App\Domain\User;
 
 use App\Domain\Common\ValueObjects\Email;
-use App\Domain\Exceptions\InsufficientFundsException;
+use App\Domain\Common\Exceptions\InsufficientFundsException;
 use App\Domain\Common\ValueObjects\BetAmount;
 use App\Domain\Common\ValueObjects\WinAmount;
-use App\Domain\Services\PasswordHasher;
+use App\Domain\Common\Services\PasswordHasher;
 
 class User
 {

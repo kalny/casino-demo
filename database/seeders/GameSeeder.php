@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Domain\Games\Common\GameType;
+use App\Domain\Game\GameType;
 use App\Infrastructure\Persistence\Eloquent\Models\Game;
 use Illuminate\Database\Seeder;
 

@@ -3,12 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Domain\Common\ValueObjects\BetAmount;
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Games\GameId;
-use App\Domain\Games\Repository\GameRepository;
-use App\Domain\Games\Slot\RandomGridGenerator;
-use App\Domain\Games\Slot\ValueObjects\PlaySlotInput;
-use App\Domain\Services\IdGenerator;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\Game\GameId;
+use App\Domain\Game\Repository\GameRepository;
+use App\Domain\Game\Slot\RandomGridGenerator;
+use App\Domain\Game\Slot\ValueObjects\PlaySlotInput;
+use App\Application\Services\IdGenerator;
 use App\Domain\User\UserId;
 use App\Infrastructure\Services\PHPSeededRandomNumberGenerator;
 use Illuminate\Console\Command;

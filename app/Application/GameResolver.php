@@ -6,11 +6,11 @@ use App\Application\UseCase\PlayDiceGame\PlayDiceGameCommand;
 use App\Application\UseCase\PlayDiceGame\PlayDiceGameHandler;
 use App\Application\UseCase\PlaySlotGame\PlaySlotGameCommand;
 use App\Application\UseCase\PlaySlotGame\PlaySlotGameHandler;
-use App\Domain\Exceptions\InsufficientFundsException;
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Exceptions\InvalidGameTypeException;
-use App\Domain\Games\Common\GameOutcome;
-use App\Domain\Games\Common\GameType;
+use App\Domain\Common\Exceptions\InsufficientFundsException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\Game\Exceptions\InvalidGameTypeException;
+use App\Domain\Game\GameOutcome;
+use App\Domain\Game\GameType;
 
 class GameResolver
 {

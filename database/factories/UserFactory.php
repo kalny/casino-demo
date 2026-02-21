@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Domain\Common\ValueObjects\Email;
-use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
 use App\Infrastructure\Persistence\Eloquent\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;

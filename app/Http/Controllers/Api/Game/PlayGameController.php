@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\Game;
 
 use App\Application\GameResolver;
-use App\Domain\Exceptions\InsufficientFundsException;
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Exceptions\InvalidGameTypeException;
-use App\Domain\Games\GameId;
-use App\Domain\Games\Repository\GameRepository;
+use App\Domain\Common\Exceptions\InsufficientFundsException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\Game\Exceptions\InvalidGameTypeException;
+use App\Domain\Game\GameId;
+use App\Domain\Game\Repository\GameRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Game\PlayGameRequest;
 use App\Http\Resources\Api\Game\GameResultResource;

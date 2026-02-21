@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api\Game;
 
-use App\Domain\Games\Common\GameOutcome;
+use App\Domain\Game\GameOutcome;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

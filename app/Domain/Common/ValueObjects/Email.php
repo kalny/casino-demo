@@ -2,7 +2,7 @@
 
 namespace App\Domain\Common\ValueObjects;
 
-use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
 
 final readonly class Email
 {

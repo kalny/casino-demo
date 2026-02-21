@@ -2,7 +2,7 @@
 
 namespace App\Application\UseCase\LogoutUser;
 
-use App\Domain\Services\TokenManager;
+use App\Application\Services\TokenManager;
 use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\UserId;
 

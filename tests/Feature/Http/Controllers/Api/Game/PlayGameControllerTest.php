@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api\Game;
 
-use App\Domain\Games\Common\GameType;
+use App\Domain\Game\GameType;
 use App\Infrastructure\Persistence\Eloquent\Models\Game;
 use App\Infrastructure\Persistence\Eloquent\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

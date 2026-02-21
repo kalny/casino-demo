@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Persistence\Eloquent\Models;
 
-use App\Domain\Games\Common\GameType;
+use App\Domain\Game\GameType;
 use Database\Factories\GameFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

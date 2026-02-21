@@ -4,11 +4,11 @@ namespace App\Application\UseCase\RegisterUser;
 
 use App\Application\UseCase\UserResponse;
 use App\Domain\Common\ValueObjects\Email;
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Exceptions\UserAlreadyExistsException;
-use App\Domain\Services\IdGenerator;
-use App\Domain\Services\PasswordHasher;
-use App\Domain\Services\TokenManager;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\User\Exceptions\UserAlreadyExistsException;
+use App\Application\Services\IdGenerator;
+use App\Domain\Common\Services\PasswordHasher;
+use App\Application\Services\TokenManager;
 use App\Domain\User\User;
 use App\Domain\User\Repository\UserRepository;
 use App\Domain\User\UserId;

@@ -2,7 +2,7 @@
 
 namespace App\Application\UseCase\PlayDiceGame;
 
-use App\Domain\Exceptions\InvalidArgumentException;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
 
 final readonly class PlayDiceGameCommand
 {

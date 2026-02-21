@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 use App\Application\Ports\TransactionManager;
-use App\Domain\Games\Repository\GameOutcomeRepository;
-use App\Domain\Games\Repository\GameRepository;
-use App\Domain\Services\IdGenerator;
-use App\Domain\Services\PasswordHasher;
-use App\Domain\Services\RandomNumberGenerator;
-use App\Domain\Services\TokenManager;
+use App\Domain\Game\Repository\GameOutcomeRepository;
+use App\Domain\Game\Repository\GameRepository;
+use App\Application\Services\IdGenerator;
+use App\Domain\Common\Services\PasswordHasher;
+use App\Domain\Common\Services\RandomNumberGenerator;
+use App\Application\Services\TokenManager;
 use App\Domain\User\Repository\UserRepository;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentGameOutcomeRepository;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentGameRepository;

@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Services;
 
-use App\Domain\Services\PasswordHasher;
+use App\Domain\Common\Services\PasswordHasher;
 use Illuminate\Support\Facades\Hash;
 
 class LaravelPasswordHasher implements PasswordHasher

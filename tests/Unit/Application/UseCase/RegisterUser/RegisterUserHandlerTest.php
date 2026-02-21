@@ -4,11 +4,11 @@ namespace Tests\Unit\Application\UseCase\RegisterUser;
 
 use App\Application\UseCase\RegisterUser\RegisterUserCommand;
 use App\Application\UseCase\RegisterUser\RegisterUserHandler;
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Exceptions\UserAlreadyExistsException;
-use App\Domain\Services\IdGenerator;
-use App\Domain\Services\PasswordHasher;
-use App\Domain\Services\TokenManager;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\User\Exceptions\UserAlreadyExistsException;
+use App\Application\Services\IdGenerator;
+use App\Domain\Common\Services\PasswordHasher;
+use App\Application\Services\TokenManager;
 use App\Domain\User\Repository\UserRepository;
 use Tests\TestCase;
 

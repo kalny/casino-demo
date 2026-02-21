@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Services;
 
-use App\Domain\Services\TokenManager;
+use App\Application\Services\TokenManager;
 use App\Domain\User\User;
 use App\Infrastructure\Persistence\Eloquent\Models\User as UserEloquentModel;
 use Illuminate\Support\Facades\Auth;

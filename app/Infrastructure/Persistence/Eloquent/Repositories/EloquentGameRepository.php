@@ -2,17 +2,17 @@
 
 namespace App\Infrastructure\Persistence\Eloquent\Repositories;
 
-use App\Domain\Exceptions\InvalidArgumentException;
-use App\Domain\Exceptions\InvalidGameConfigException;
-use App\Domain\Games\Common\GameType;
-use App\Domain\Games\Dice\DiceGame;
-use App\Domain\Games\GameId;
-use App\Domain\Games\Repository\GameRepository;
-use App\Domain\Games\Slot\SlotGame;
-use App\Domain\Games\Slot\ValueObjects\GridInt;
-use App\Domain\Games\Slot\ValueObjects\Paylines;
-use App\Domain\Games\Slot\ValueObjects\ReelStrip;
-use App\Domain\Games\Slot\ValueObjects\SymbolsCollection;
+use App\Domain\Common\Exceptions\InvalidArgumentException;
+use App\Domain\Game\Exceptions\InvalidGameConfigException;
+use App\Domain\Game\GameType;
+use App\Domain\Game\Dice\DiceGame;
+use App\Domain\Game\GameId;
+use App\Domain\Game\Repository\GameRepository;
+use App\Domain\Game\Slot\SlotGame;
+use App\Domain\Game\Slot\ValueObjects\GridInt;
+use App\Domain\Game\Slot\ValueObjects\Paylines;
+use App\Domain\Game\Slot\ValueObjects\ReelStrip;
+use App\Domain\Game\Slot\ValueObjects\SymbolsCollection;
 use App\Domain\Common\ValueObjects\BetMultiplier;
 use App\Infrastructure\Persistence\Eloquent\Models\Game as GameEloquentModel;
 
